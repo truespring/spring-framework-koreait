@@ -16,23 +16,23 @@
 }
 %> 
 <%
-	List<BoardVO> boardList = new ArrayList();
-	Connection con = null; // 연결담당 - DB와 연결하기 위함
-	PreparedStatement ps = null; // 커리문 완성 
+	List<BoardVO> boardList = new ArrayList(); // 여러 개의 레코드를 가져오기 위해 List를 사용한다 ex) List는 서랍장, BoardVO는 서랍
+	Connection con = null; // 연결 담당 - DB와 연결하기 위함
+	PreparedStatement ps = null; // 커리문 실행 담당 - 문장 완성 기능도 있다. 
 	ResultSet rs = null; // SELECT문의 결과를 담는다
 	
-	String sql = " SELECT i_board, title FROM t_board ";
+	String sql = " SELECT i_board, title FROM t_board "; // SELECT문에서만 사용
 	
 	try{
-		con = getCon();
-		ps = con.prepareStatement(sql);
+		con = getCon(); // 연결된 상태
+		ps = con.prepareStatement(sql); // 객체화된 커리문을 리턴하여 받는다.
 		rs = ps.executeQuery(); //SELECT 때만 사용하는 메소드 executeQuery는 crtl + enter 하는 것
 		
 		while(rs.next()){ // DB의 레코드가 있으면 true를 리턴하며 반복한다
-			int i_board = rs.getInt("i_board"); // 컬럼명 입력
-			String title = rs.getNString("title");
+			int i_board = rs.getInt("i_board"); // 테이블에 존재하는 컬럼명 입력
+			String title = rs.getNString("title"); // 정수형이 문자형으로 넘어오고 문자형은 정수형으로 넘어올 수 없다.
 			
-			BoardVO vo = new BoardVO();
+			BoardVO vo = new BoardVO(); // 굉장히 중요함! 반드시 while문 안에서 객체화 해야한다. 밖에서 생성하면 마지막 레코드만 출력학게 된다.
 			vo.setI_board(i_board);
 			vo.setTitle(title); // 여기까지 파싱작업
 			
