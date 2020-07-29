@@ -38,12 +38,12 @@
 			
 			boardList.add(vo);
 		}
-	} catch(Exception e){
+	} catch(Exception e){ // 예외처리가 굉장히 중요하다 공부하는 것이 좋다.
 		e.printStackTrace();
 	} finally { // 닫을 때는 열 때의 역순
-		if(rs != null){	try{ rs.close(); } catch(Exception e) {} }
-		if(ps != null){	try{ ps.close(); } catch(Exception e) {} }
-		if(con != null){ try{ con.close(); } catch(Exception e) {} }
+		if(rs != null){	try{ rs.close(); } catch(Exception e) {} } // 각자 처리하고 싶은 것이 달라서 나눴다. try하나에 3개 모두 담으면 rs에서 에러가 발생했을 떄 ps, con은 실행하지 않고 닫지 않는다.
+		if(ps != null){	try{ ps.close(); } catch(Exception e) {} } // 객체가 null인 상태에서 close()를 하면 에러가 발생한다.
+		if(con != null){ try{ con.close(); } catch(Exception e) {} } // 닫아주는 이유는 리소스를 줄이기 위해서, http서버는 한번 뿌리고나서 연결을 끊어버린다.
 	}
 %>
 <!DOCTYPE html>
@@ -62,11 +62,14 @@
 			<th>No</th>
 			<th>제목</th>
 		</tr>
-		
 		<% for(BoardVO vo : boardList){ %>
 		<tr>
 			<td><%=vo.getI_board() %></td>
-			<td><%=vo.getTitle() %></td>
+			<td>
+				<a href="/jsp/boardDetail.jsp?i_board=<%=vo.getI_board() %>">
+					<%=vo.getTitle() %>
+				</a>
+			</td>
 		</tr>
 		<% } %>
 	</table>
