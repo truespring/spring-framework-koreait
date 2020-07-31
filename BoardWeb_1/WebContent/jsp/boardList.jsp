@@ -4,7 +4,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.koreait.web.BoardVO" %>
 <%!
-	public Connection getCon() throws Exception{
+	Connection getCon() throws Exception{
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String userName = "hr";
 	String password = "koreait2020";
@@ -21,7 +21,7 @@
 	PreparedStatement ps = null; // 커리문 실행 담당 - 문장 완성 기능도 있다. 
 	ResultSet rs = null; // SELECT문의 결과를 담는다
 	
-	String sql = " SELECT i_board, title FROM t_board "; // SELECT문에서만 사용
+	String sql = " SELECT i_board, title FROM t_board ORDER BY i_board DESC "; // SELECT문에서만 사용
 	
 	try{
 		con = getCon(); // 연결된 상태
@@ -52,11 +52,28 @@
 <meta charset="UTF-8">
 <title>리스트</title>
 </head>
+<style>
+ table td a {
+ 	text-decoration: none; color: black;
+ }
+ table {
+ 	border: 1px solid black; border-collapse: collapse;
+ }
+ table th {
+ 	border: 1px solid black;
+ }
+ table td {
+ 	border: 1px solid black;
+ }
+</style>
 <body>
 	<h2>JSP 입문</h2>
 	<hr>
 	<%="게시판 리스트" %>
-	<div>게시판 리스트</div>
+	<div>
+		게시판 리스트
+		<a href="/jsp/boardWrite.jsp"><button>글쓰기</button></a>
+	</div>
 	<table>
 		<tr>
 			<th>No</th>

@@ -3,7 +3,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="com.koreait.web.BoardVO" %>
 <%!
-	public Connection getCon() throws Exception{
+	Connection getCon() throws Exception{
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String userName = "hr";
 	String password = "koreait2020";
