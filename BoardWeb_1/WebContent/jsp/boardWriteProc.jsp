@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="com.koreait.web.BoardVO" %>
+<% 	// 글쓰기 이후 실질적으로 작동하는 페이지 %>
 <%!
 	Connection getCon() throws Exception{
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
