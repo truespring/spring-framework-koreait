@@ -19,7 +19,7 @@
 	List<BoardVO> boardList = new ArrayList(); // 여러 개의 레코드를 가져오기 위해 List를 사용한다 ex) List는 서랍장, BoardVO는 서랍
 	Connection con = null; // 연결 담당 - DB와 연결하기 위함
 	PreparedStatement ps = null; // 커리문 실행 담당 - 문장 완성 기능도 있다. 
-	ResultSet rs = null; // SELECT문의 결과를 담는다
+	ResultSet rs = null; // SELECT문의 결과를 담는다(SELECT문에서만 사용한다) 선택한 결과를 담는다
 	
 	String sql = " SELECT i_board, title FROM t_board ORDER BY i_board DESC "; // SELECT문에서만 사용
 	
@@ -53,42 +53,53 @@
 <title>리스트</title>
 </head>
 <style>
+ .container {
+ 	margin: 30px auto; text-align: center;
+ }
+ #write {
+ 	margin: 20px;
+ }
+ #write button {
+ 	width: 100px; 
+ }
  table td a {
  	text-decoration: none; color: black;
  }
  table {
- 	border: 1px solid black; border-collapse: collapse;
+ 	border: 1px solid black; border-collapse: collapse; width: 300px;
+ 	margin: 0 auto; 
  }
  table th {
- 	border: 1px solid black;
+ 	border: 1px solid black; padding: 10px; background-color: #ccc;
  }
  table td {
- 	border: 1px solid black;
+ 	border: 1px solid black; padding: 10px; text-align: justify;
  }
 </style>
 <body>
-	<h2>JSP 입문</h2>
-	<hr>
-	<%="게시판 리스트" %>
-	<div>
-		게시판 리스트
-		<a href="/jsp/boardWrite.jsp"><button>글쓰기</button></a>
+	<div class="container">
+		<h2>JSP 입문</h2>
+		<hr>
+		<div id="write">
+			게시판 리스트
+			<a href="/jsp/boardWrite.jsp"><button>글쓰기</button></a>
+		</div>
+		<table>
+			<tr>
+				<th>No</th>
+				<th>제목</th>
+			</tr>
+			<% for(BoardVO vo : boardList){ %>
+			<tr>
+				<td><%=vo.getI_board() %></td>
+				<td>
+					<a href="/jsp/boardDetail.jsp?i_board=<%=vo.getI_board() %>">
+						<%=vo.getTitle() %>
+					</a>
+				</td>
+			</tr>
+			<% } %>
+		</table>
 	</div>
-	<table>
-		<tr>
-			<th>No</th>
-			<th>제목</th>
-		</tr>
-		<% for(BoardVO vo : boardList){ %>
-		<tr>
-			<td><%=vo.getI_board() %></td>
-			<td>
-				<a href="/jsp/boardDetail.jsp?i_board=<%=vo.getI_board() %>">
-					<%=vo.getTitle() %>
-				</a>
-			</td>
-		</tr>
-		<% } %>
-	</table>
 </body>
 </html>

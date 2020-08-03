@@ -13,8 +13,7 @@
 	System.out.println("접속 성공!");
 	return con;
 }
-%> 
-<%
+%> <%
 	String strI_board = request.getParameter("i_board"); // 요청 정보, request는 내장(톰캣) 객체이다
 	if(strI_board == null) {
 %>
@@ -27,7 +26,7 @@
 		return; // 메소드를 종료시키기 위해 반드시 들어가야한다.
 	}
 	
-	
+	BoardVO vo = new BoardVO();
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
@@ -36,7 +35,6 @@
 	String sql = " SELECT title, ctnt, i_student FROM t_board WHERE i_board = ?";
 
 	int i_board = Integer.parseInt(strI_board);
-	BoardVO vo = new BoardVO();
 
 	try{
 		con = getCon();
@@ -53,6 +51,7 @@
 			vo.setTitle(title);
 			vo.setCtnt(ctnt);
 			vo.setI_student(i_student);
+			
 		}
 	} catch (Exception e){
 		e.printStackTrace();
@@ -67,55 +66,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상세 페이지</title>
-<style>
-	.container {
-		margin: 30px auto;
-	}
-	.container h2 {
-		text-align: center;
-	}
-	table {
-	 	border: 1px solid black; border-collapse: collapse; width: 300px;
-	 	margin: 0 auto; 
-	}
-	table th {
-	 	border: 1px solid black; padding: 10px; background-color: #ccc;
-	}
-	table td {
-	 	border: 1px solid black; padding: 10px; text-align: justify;
-	}
-</style>
+<title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
-		<h2>JSP 입문</h2>
-		<hr>
-		<div><a href="/jsp/boardList.jsp">리스트로 가기</a></div>
-		<div><a href="#" onclick="procDel(<%=i_board %>)">삭제</a></div>
-		<div><a href="/jsp/boardMod.jsp?i_board=<%=i_board %>">수정</a></div> <% // 어디를 수정할 것인지 알려줘야함 %>
-		<div>상세 페이지 : <%=strI_board %></div>
-		<table>
-			<tr>
-				<th>제목</th>
-				<th>내용</th>
-				<th>학생번호</th>
-			</tr>
-			<tr>
-				<td><%=vo.getTitle() %></td>
-				<td><%=vo.getCtnt() %></td>
-				<td><%=vo.getI_student() %></td>
-			</tr>
-		</table>
-	</div>
-	<script>
-		function procDel(i_board) {
-			// alert('i_board : ' + i_board)
-			var result = confirm('삭제하시겠습니까?');
-			if(result){
-				location.href = '/jsp/boardDel.jsp?i_board=' + i_board;
-			}
-		}
-	</script>
+
+
 </body>
 </html>
