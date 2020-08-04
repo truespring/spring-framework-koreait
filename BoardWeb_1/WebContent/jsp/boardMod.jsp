@@ -13,7 +13,22 @@
 	System.out.println("접속 성공!");
 	return con;
 }
-%> <%
+%>
+<%
+	String msg = ""; // 에러 메시지
+	String err = request.getParameter("err"); // err 값을 받아서 어떤 에러인지 판단
+	if(err != null){
+		switch(err) {
+		case "10":
+			msg = "등록할 수 없습니다.";
+			break;
+		case "20":
+			msg = "DB 에러 발생";
+			break;
+		}
+	}
+%> 
+<%
 	String strI_board = request.getParameter("i_board"); // 요청 정보, request는 내장(톰캣) 객체이다
 	if(strI_board == null) {
 %>
@@ -32,7 +47,7 @@
 	ResultSet rs = null;
 	
 	//String sql = " SELECT title, ctnt, i_student FROM t_board WHERE i_board = " + strI_board;
-	String sql = " SELECT title, ctnt, i_student FROM t_board WHERE i_board = ?";
+	String sql = " SELECT title, ctnt, i_student FROM t_board WHERE i_board = ? ";
 
 	int i_board = Integer.parseInt(strI_board);
 
@@ -67,9 +82,74 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.container {
+		margin: 30px auto
+	}
+	h2 {
+		text-align: center;
+	}
+	#msg {
+		color: red;
+	}
+	#title {
+		margin: 20px
+	}
+	#ctnt {
+		margin: 20px
+	}
+	#author {
+		margin: 20px
+	}
+	#send { 
+		float:left; margin: 10px;
+	}
+	#back {
+		float:left; margin: 10px;
+	}
+</style>
 </head>
 <body>
-
-
+	<div class="container">
+		<h2>JSP 입문</h2>
+		<hr>
+		<div id="msg"><%=msg %></div>
+		<form id="frm" action="/jsp/boardModProc.jsp?i_board=<%=i_board %>" method="POST" onsubmit="return chk()"><%// form태그를 통해 값들을 전달하는데 그 방식은 POST방식과 GET방식이 존재한다 %>
+			<input type="hidden" name="i_board" value="<%=i_board %>">
+			<div id="title"><label>제목 : <input type="text" name="title" value="<%=vo.getTitle() %>"></label></div>
+			<% // 속성(name)과 값(value)을 쓰는 이유는 DB에게 값을 날릴 때 키 값이 된다.
+			// id는 유일성으로 사용하고 class는 그룹의 의미로 사용한다. %>
+			<div id="ctnt">
+				<label>내용 : <textarea name="ctnt" cols="70" rows="10"><%=vo.getCtnt() %></textarea></label>
+			</div>
+			<div id="author"><label>작성자 : <input type="text" name="i_student" value="<%=vo.getI_student() %>"></label></div>
+			<div id="send"><input type="submit" value="수정하기"></div>
+		</form>
+		<div id="back">
+			<a href="/jsp/boardDetail.jsp?i_board=<%=i_board %>"><button>뒤로가기</button></a>
+		</div>
+	</div>
+	<script>
+		function eleValid(ele, nm) {
+			if(ele.value.length == 0){
+				alert(nm + '을(를) 입력해 주세요.');
+				ele.focus();
+				return true;
+			}
+		}
+	
+		function chk() {
+			console.log(`title : \${frm.title.value}`); // \는 Javascript의 $를 쓰고 싶을때 
+			// console.log('title : ' + frm.title.value); // 위 아래가 같은 문법
+			if(eleValid(frm.title, '제목')) {
+				return false;
+			} else if(eleValid(frm.ctnt, '내용')) {
+				return false;
+			} else if(eleValid(frm.i_student, '작성자')) {
+				return false;
+			} 
+			 
+		}
+	</script>
 </body>
 </html>
