@@ -16,8 +16,7 @@ public class BoardDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String sql = " SELECT i_board, title FROM t_board" 
-				+ " ORDER BY i_board DESC ";
+		String sql = " SELECT i_board, title FROM t_board" + " ORDER BY i_board DESC ";
 
 		try {
 			con = DbCon.getCon(); // Connection을 더이상 쳐주지 않게 하기 위해서 만들어 주었다.
@@ -48,9 +47,8 @@ public class BoardDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
-		String sql = " SELECT i_board, title, ctnt, i_student FROM t_board"
-				+ " WHERE i_board = ? ";
+
+		String sql = " SELECT i_board, title, ctnt, i_student FROM t_board" + " WHERE i_board = ? ";
 
 		try {
 			con = DbCon.getCon(); // Connection을 더이상 쳐주지 않게 하기 위해서 만들어 주었다.
@@ -77,7 +75,29 @@ public class BoardDAO {
 		}
 		return vo;
 	}
-	
-		
+
+	public static void insBoard(BoardVO param) {
+		BoardVO vo = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String sql = " INSERT INTO t_board(i_board, title, ctnt, i_student) " 
+				+ " SELECT nvl(max(i_board),0) + 1, ?, ?, ? "
+				+ " FROM t_board ";
+
+		try {
+			con = DbCon.getCon(); // Connection을 더이상 쳐주지 않게 하기 위해서 만들어 주었다.
+			ps = con.prepareStatement(sql);
+			ps.setNString(1, param.getTitle()); // 커리문을 완성하기 전에 값을 넣어야 한다.
+			ps.setNString(2, param.getCtnt());
+			ps.setInt(3, param.getI_student());
+			// 0줄이나 한 줄을 가져오기 때문에 초기화를 한 다음 if문 안에서 객체화를 한다. 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps);
+		}
+	}
 
 }

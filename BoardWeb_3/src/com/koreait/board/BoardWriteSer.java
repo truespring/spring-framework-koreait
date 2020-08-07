@@ -1,6 +1,7 @@
 package com.koreait.board;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.koreait.board.common.Utils;
+import com.koreait.board.vo.BoardVO;
 
 @WebServlet("/boardWrite")
 public class BoardWriteSer extends HttpServlet {
@@ -39,6 +41,9 @@ public class BoardWriteSer extends HttpServlet {
 			response.sendRedirect("/boardList");
 			return;
 		}
+		
+		BoardVO param = new BoardVO();
+		
 	}
 
 }
