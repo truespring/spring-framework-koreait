@@ -5,16 +5,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.container {
+		margin: 30px auto
+	}
+	h2 {
+		text-align: center;
+	}
+	#msg {
+		color: red;
+	}
+	#title {
+		margin: 20px
+	}
+	#ctnt {
+		margin: 20px
+	}
+	#author {
+		margin: 20px
+	}
+	#send { 
+		float:left; margin: 10px;
+	}
+	#reset { 
+		float:left; margin: 10px;
+	}
+	#back {
+		float:left; margin: 10px;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
 		<h2>JSP 입문</h2>
 		<hr>
-		<form id="frm" action="/boardList" method="POST" onsubmit="return chk()">
+		<form id="frm" action="/boardWrite" method="POST" onsubmit="return chk()">
 			<div id="title"><label>제목 : <input type="text" name="title"></label></div>
-			<div id="ctnt">
-				<label>내용 : <textarea name="ctnt" cols="70" rows="10"></textarea></label>
-			</div>
+			<div id="ctnt"><label>내용 : <textarea name="ctnt" cols="70" rows="10"></textarea></label></div>
 			<div id="author"><label>작성자 : <input type="text" name="i_student"></label></div>
 			<div id="send"><input type="submit" value="글등록"></div>
 		</form>

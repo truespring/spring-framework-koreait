@@ -77,7 +77,6 @@ public class BoardDAO {
 	}
 
 	public static void insBoard(BoardVO param) {
-		BoardVO vo = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -91,6 +90,7 @@ public class BoardDAO {
 			ps.setNString(1, param.getTitle()); // 커리문을 완성하기 전에 값을 넣어야 한다.
 			ps.setNString(2, param.getCtnt());
 			ps.setInt(3, param.getI_student());
+			ps.executeUpdate();
 			// 0줄이나 한 줄을 가져오기 때문에 초기화를 한 다음 if문 안에서 객체화를 한다. 
 
 		} catch (Exception e) {
@@ -98,6 +98,32 @@ public class BoardDAO {
 		} finally {
 			DbCon.close(con, ps);
 		}
+	}
+	
+	public static int instBoard(BoardVO param) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " INSERT INTO t_board(i_board, title, ctnt, i_student) "
+				+ " VALUES (seq_board.nextval, ?, ?, ?) ";
+		
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setNString(1, param.getTitle());
+			ps.setNString(2, param.getCtnt());
+			ps.setInt(3, param.getI_student());
+			
+			result = ps.executeUpdate(); // SELECT 빼고 사용하면 된다.
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps);
+		}
+		
+		return result;
 	}
 
 }
