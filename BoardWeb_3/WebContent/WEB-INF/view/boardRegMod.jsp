@@ -33,12 +33,17 @@
 	#back {
 		float:left; margin: 10px;
 	}
+	.err {
+		color: red;
+	}
+	
 </style>
 </head>
 <body>
 	<div class="container">
 		<h2>JSP 입문</h2>
 		<hr>
+		<div class="err">${msg }</div>
 		<form id="frm" action="/boardWrite" method="POST" onsubmit="return chk()">
 			<div id="title"><label>제목 : <input type="text" name="title"></label></div>
 			<div id="ctnt"><label>내용 : <textarea name="ctnt" cols="70" rows="10"></textarea></label></div>

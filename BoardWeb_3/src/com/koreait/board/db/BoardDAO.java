@@ -114,7 +114,6 @@ public class BoardDAO {
 			ps.setNString(1, param.getTitle());
 			ps.setNString(2, param.getCtnt());
 			ps.setInt(3, param.getI_student());
-			
 			result = ps.executeUpdate(); // SELECT 빼고 사용하면 된다.
 			
 		} catch (Exception e) {
@@ -122,8 +121,27 @@ public class BoardDAO {
 		} finally {
 			DbCon.close(con, ps);
 		}
-		
 		return result;
 	}
-
+	
+	public static int delBoard(BoardVO param) {
+		int result = 0; // 삭제가 되지 않았다는 default 값
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " DELETE FROM t_board " + 
+				" WHERE i_board = ? ";
+		
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DbCon.close(con, ps);
+		}
+		return result;
+	}
 }

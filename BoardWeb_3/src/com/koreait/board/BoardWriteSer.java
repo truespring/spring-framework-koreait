@@ -34,7 +34,6 @@ public class BoardWriteSer extends HttpServlet {
 		System.out.println("ctnt : " + ctnt);
 		System.out.println("i_student : " + strI_student); // 단위 테스트 - 작업이 잘 되었나 확인을 위함
 		
-		
 		BoardVO param = new BoardVO();
 		param.setTitle(title);
 		param.setCtnt(ctnt);
@@ -44,9 +43,12 @@ public class BoardWriteSer extends HttpServlet {
 		int result = BoardDAO.instBoard(param);
 		System.out.println("result : " + result);
 		
-		response.sendRedirect("/boardList");
-		
-		
+		if(result == 1) { // 글쓰기가 잘 되었을 때
+			response.sendRedirect("/boardList");
+		} else { // 글이 최대치를 넘어 에러가 발생했을 때
+			request.setAttribute("msg", "에러가 발생했습니다.");
+			doGet(request, response);
+		}
 	}
 
 }
