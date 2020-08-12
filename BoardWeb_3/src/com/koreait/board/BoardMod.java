@@ -16,6 +16,7 @@ public class BoardMod extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		jsp에서 값을 받아옴
 		String strI_board = request.getParameter("i_board");
 		
 		int i_board = Utils.parseStrToInt(strI_board);
@@ -26,16 +27,17 @@ public class BoardMod extends HttpServlet {
 		}
 		
 		BoardVO param = new BoardVO();
-		param.setI_board(i_board);
-		BoardVO data = BoardDAO.selBoard(param); // DB로 값 받기
-		request.setAttribute("data", data); // 키값으로 주소값을 받아옴
+		param.setI_board(i_board); // 받아온 값을 객체에 담는다
+		BoardVO data = BoardDAO.selBoard(param); // selBoard 메소드를 통해 값을 담는다
+		request.setAttribute("data", data); // 담은 값을 사용할 수 있게 한다
 		
 		String jsp = "/WEB-INF/view/boardRegMod.jsp";
-		request.getRequestDispatcher(jsp).forward(request, response);
+		request.getRequestDispatcher(jsp).forward(request, response); // 값을 가지고 해당 jsp로 이동한다.
 		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		jsp에서 post방식으로 보내온 값을 action에 해당되는 주소로 이동하여 값을 받는다
 		String strI_board = request.getParameter("i_board");
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
@@ -53,9 +55,9 @@ public class BoardMod extends HttpServlet {
 		param.setI_board(i_board);
 		param.setTitle(title);
 		param.setCtnt(ctnt);
-		param.setI_student(i_student);
+		param.setI_student(i_student); // 받아온 값들을 객체에 담는다
 		
-		int result = BoardDAO.upBoard(param);
+		int result = BoardDAO.upBoard(param); // 객체를 통해 upBoard 메소드를 실행시킨다
 		System.out.println("result : " + result);
 		
 		if(result == 1 ) {
