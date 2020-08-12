@@ -58,7 +58,7 @@ public class BoardModSer extends HttpServlet {
 		System.out.println("result : " + result);
 		
 		if(result == 1 ) {
-			response.sendRedirect("/boardList");
+			response.sendRedirect("/boardDetail?i_board=" + i_board);
 		} else {
 			request.setAttribute("msg", "에러가 발생했습니다.");
 			doGet(request, response);

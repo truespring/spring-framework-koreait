@@ -12,6 +12,9 @@
 	.container h2 {
 		text-align: center;
 	}
+	#list a {
+		color: purple; text-decoration: none;
+	}
 	table {
 	 	border: 1px solid black; border-collapse: collapse; width: 300px;
 	 	margin: 0 auto; 
@@ -28,7 +31,7 @@
 	<div class="container">
 		<h2>JSP 입문</h2>
 		<hr>
-		<div>상세 페이지</div>
+		<div id='list'><a href="/boardList">리스트로</a></div>
 		<div>글번호 : ${data.i_board}</div>
 		<% // 이런 형식을 EL식이라고 하며 4가지의 내장 객체에서만 사용이 가능하다
 		   // 그 중에서 제일 먼저 만나는 객체를 우선 순위로 두고 없다면 순차적으로 확인한다%>
