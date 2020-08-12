@@ -12,11 +12,11 @@ import com.koreait.board.db.BoardDAO;
 import com.koreait.board.vo.BoardVO;
 
 @WebServlet("/boardMod")
-public class BoardMod extends HttpServlet {
+public class BoardModSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		jsp에서 값을 받아옴
+//		jsp에서 값을 받아옴 - 화면을 열기위해
 		String strI_board = request.getParameter("i_board");
 		
 		int i_board = Utils.parseStrToInt(strI_board);
@@ -41,10 +41,8 @@ public class BoardMod extends HttpServlet {
 		String strI_board = request.getParameter("i_board");
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
-		String strI_student = request.getParameter("i_student");
 		
 		int i_board = Utils.parseStrToInt(strI_board);
-		int i_student = Utils.parseStrToInt(strI_student);
 		
 		if(i_board == 0) {
 			response.sendRedirect("/boardList");
@@ -54,10 +52,9 @@ public class BoardMod extends HttpServlet {
 		BoardVO param = new BoardVO();
 		param.setI_board(i_board);
 		param.setTitle(title);
-		param.setCtnt(ctnt);
-		param.setI_student(i_student); // 받아온 값들을 객체에 담는다
+		param.setCtnt(ctnt); // 받아온 값들을 객체에 담는다
 		
-		int result = BoardDAO.upBoard(param); // 객체를 통해 upBoard 메소드를 실행시킨다
+		int result = BoardDAO.updBoard(param); // 객체를 통해 upBoard 메소드를 실행시킨다
 		System.out.println("result : " + result);
 		
 		if(result == 1 ) {

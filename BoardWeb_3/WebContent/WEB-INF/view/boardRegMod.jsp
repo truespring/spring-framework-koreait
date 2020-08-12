@@ -48,7 +48,7 @@
 			<input type="hidden" name="i_board" value="${data.i_board }">
 			<div id="title"><label>제목 : <input type="text" name="title" value="${data.title }"></label></div>
 			<div id="ctnt"><label>내용 : <textarea name="ctnt" cols="70" rows="10">${data.ctnt }</textarea></label></div>
-			<div id="author"><label>작성자 : <input type="text" name="i_student" value="${data.i_student }"></label></div>
+			<div id="author"><label>작성자 : <input type="text" name="i_student" value="${data.i_student }" ${data == null ? '':'readonly' }></label></div>
 			<div id="send"><input type="submit" value="${data == null ? '글등록' : '글수정' }"></div>
 		</form>
 	</div>
