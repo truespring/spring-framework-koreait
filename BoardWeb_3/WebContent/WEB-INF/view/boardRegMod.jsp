@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>${data == null ? "글등록" : "글수정" }</title>
 <style>
 	.container {
 		margin: 30px auto
@@ -44,11 +44,12 @@
 		<h2>JSP 입문</h2>
 		<hr>
 		<div class="err">${msg }</div>
-		<form id="frm" action="/boardWrite" method="POST" onsubmit="return chk()">
-			<div id="title"><label>제목 : <input type="text" name="title"></label></div>
-			<div id="ctnt"><label>내용 : <textarea name="ctnt" cols="70" rows="10"></textarea></label></div>
-			<div id="author"><label>작성자 : <input type="text" name="i_student"></label></div>
-			<div id="send"><input type="submit" value="글등록"></div>
+		<form id="frm" action="/${data == null ? 'boardWrite' : 'boardMod' }" method="POST" onsubmit="return chk()">
+			<input type="hidden" name="i_board" value="${data.i_board }">
+			<div id="title"><label>제목 : <input type="text" name="title" value="${data.title }"></label></div>
+			<div id="ctnt"><label>내용 : <textarea name="ctnt" cols="70" rows="10">${data.ctnt }</textarea></label></div>
+			<div id="author"><label>작성자 : <input type="text" name="i_student" value="${data.i_student }"></label></div>
+			<div id="send"><input type="submit" value="${data == null ? '글등록' : '글수정' }"></div>
 		</form>
 	</div>
 	<script>

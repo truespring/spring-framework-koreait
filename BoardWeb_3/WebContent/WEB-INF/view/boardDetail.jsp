@@ -36,6 +36,7 @@
 		<div>내용 : ${data.ctnt}</div>
 		<div>작성자: ${data.i_student}</div>
 		<div><button onclick="doDel(${data.i_board})">삭제</button></div>
+		<div><a href="/boardMod?i_board=${data.i_board }"><button>수정</button></a></div>
 	</div>
 	<script>
 		function doDel(i_board) { // 객체 밖에 있으면 함수, 객체 안에 있으면 메소드
