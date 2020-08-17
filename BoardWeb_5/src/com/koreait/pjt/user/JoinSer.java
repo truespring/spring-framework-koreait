@@ -1,4 +1,4 @@
-package com.koreait.project;
+package com.koreait.pjt.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/") // 이 servlet 하나가 모든 응답을 받을 예정 - 관리가 편하기 때문
-public class MainServlet extends HttpServlet {
+import com.koreait.pjt.ViewResolver;
+
+@WebServlet("/join")
+public class JoinSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		proc(request, response, RequestMethod.GET);
+		ViewResolver.forward("join", request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		proc(request, response, RequestMethod.POST);
-	}
-	
-	private void proc(HttpServletRequest request, HttpServletResponse response, int method) throws ServletException, IOException {
-		System.out.println("URL : " + request.getRequestURI() + ", method = " + method);
+		
 	}
 
 }

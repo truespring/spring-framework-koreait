@@ -40,7 +40,7 @@ public class BoardDetailSer extends HttpServlet {
 		
 		request.getRequestDispatcher(jsp).forward(request, response);
 	}
-
+//	업무처리에 많이 사용된다. 업데이트, 크리에이트 등
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
