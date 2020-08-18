@@ -5,17 +5,23 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<style>
+	.err {
+		color: red; font-size: 1.1em;
+	}
+</style>
 </head>
 <body>
 	<h1>회원가입</h1>
+	<div class="err">${msg }</div>
 	<div id="container">
 		<div>
 			<form id="frm" action="/join" method="post" onsubmit="return chk()">
-				<div><label><input type="text" name="user_id" placeholder="아이디" required></label></div>
+				<div><label><input type="text" name="user_id" placeholder="아이디" required value="${data.user_id }"></label></div>
 				<div><label><input type="password" name="user_pw" placeholder="비밀번호" required></label></div>
 				<div><label><input type="password" name="user_pwre" placeholder="비밀번호 확인"></label></div>
-				<div><input type="text" name="nm" placeholder="이름" required></div>
-				<div><input type="email" name="email" placeholder="이메일" required></div>
+				<div><input type="text" name="nm" placeholder="이름" required value="${data.nm }"></div>
+				<div><input type="email" name="email" placeholder="이메일" required value="${data.email }"></div>
 				<div><input type="submit" value="회원가입"></div>
 			</form>
 		</div>
