@@ -41,11 +41,11 @@ public class UserDAO {
 				ps.setNString(1, param.getUser_id());
 				return ps.executeQuery();
 			}
-			
+//			0:에러발생, 1:잘되었을 때, 2:비밀번호가 잘못됨, 3:아이디가 없음
 			@Override
 			public int executeQuery(ResultSet rs) throws SQLException {
-				if(rs.next()) {
-					String dbPw = rs.getNString("user_pw");
+				if(rs.next()) { // 아이디가 존재했을 때 레코드가 한 줄 넘어온다.
+					String dbPw = rs.getNString("user_pw"); // DB에서 가져온 값
 					
 					if(dbPw.contentEquals(param.getUser_pw())) { // 로그인 성공
 						int i_user = rs.getInt("i_user");
@@ -55,7 +55,7 @@ public class UserDAO {
 						param.setI_user(i_user);
 						param.setNm(nm);
 						return 1;
-					} else { // 비밀번호 잘 못 됨
+					} else { // 비밀번호 잘못됨
 						return 2;
 					}
 				} else { // 아이디 없음
