@@ -11,13 +11,22 @@
 		width: 500px; border: 1px solid black;
 		border-collapse: collapse;
 	}
-	th, td {
-		border: 1px solid black;
+	th {
+		border: 1px solid black; padding: 10px;
+		background-color: #03C75A
+	}
+	td {
+		border: 1px solid black; text-align: right;
+		padding: 10px;
 	}
 </style>
 </head>
 <body>
 	<h1>글목록</h1>
+	<div>${loginUser.nm }님 환영합니다.</div> <!-- 세션을 활용하는 법 -->
+	<div>
+		<a href="/regmod">글쓰기</a>
+	</div>
 	<div class="container">
 		<table>
 			<tr>
@@ -31,8 +40,8 @@
 				<tr>
 					<td>${item.i_board }</td>
 					<td>${item.title }</td>
-					<td>${item.hits }</td>
 					<td>${item.i_user }</td>
+					<td>${item.hits }</td>
 					<td>${item.r_dt }</td>
 				</tr>
 			</c:forEach>

@@ -42,7 +42,24 @@ public class BoardDAO {
 				return 1;
 			}
 		});
-		 
 		return list;
+	}
+	
+	public static int insBoard(BoardVO param) {
+		
+		String sql = " INSERT INTO t_board5 "
+				+ " (i_board, title, ctnt, i_user, nm) "
+				+ " VALUES "
+				+ " (seq_board5.nextval, ?, ?, ?) " ;
+		
+		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setNString(1, param.getTitle());
+				ps.setNString(2, param.getCtnt());
+				ps.setInt(3, param.getI_user());
+			}	
+		});
 	}
 }

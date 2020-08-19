@@ -15,6 +15,7 @@ public class JdbcTemplate {
 			con = DbCon.getCon();
 			ps = con.prepareStatement(sql);
 			jdbc.update(ps); // 달라지는 부분 처리
+			result = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
