@@ -48,7 +48,7 @@ public class BoardDAO {
 	public static int insBoard(BoardVO param) {
 		
 		String sql = " INSERT INTO t_board5 "
-				+ " (i_board, title, ctnt, i_user, nm) "
+				+ " (i_board, title, ctnt, i_user) "
 				+ " VALUES "
 				+ " (seq_board5.nextval, ?, ?, ?) " ;
 		

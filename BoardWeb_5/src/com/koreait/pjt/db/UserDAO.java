@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import com.koreait.pjt.vo.UserVO;
 
 public class UserDAO {
-	public static int insUser(UserVO param) {
+	public static int login(UserVO param) {
 		int result = 0;
 		
 		String sql = "INSERT INTO t_user "
