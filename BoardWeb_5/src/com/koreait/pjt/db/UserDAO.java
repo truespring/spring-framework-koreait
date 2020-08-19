@@ -17,14 +17,13 @@ public class UserDAO {
 		
 		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 			@Override
-			public int update(PreparedStatement ps) throws SQLException {
+			public void update(PreparedStatement ps) throws SQLException {
 //				콜백 함수를 사용한 경우이다. 이해하고 넘어가자.
 				ps.setNString(1, param.getUser_id());
 				ps.setNString(2, param.getUser_pw());
 				ps.setNString(3, param.getNm());
 				ps.setNString(4, param.getEmail());
-				return ps.executeUpdate();
-			} // 익명 클래스(객체화 한 것이 아니다)
+			} // 익명 클래스(객체화 한 것이 아니다) implements한 것
 		});
 	}
 	
@@ -37,9 +36,8 @@ public class UserDAO {
 		
 		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 			@Override
-			public ResultSet prepared(PreparedStatement ps) throws SQLException {
+			public void prepared(PreparedStatement ps) throws SQLException {
 				ps.setNString(1, param.getUser_id());
-				return ps.executeQuery();
 			}
 //			0:에러발생, 1:잘되었을 때, 2:비밀번호가 잘못됨, 3:아이디가 없음
 			@Override

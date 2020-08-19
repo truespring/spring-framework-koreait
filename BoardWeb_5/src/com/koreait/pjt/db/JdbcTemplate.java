@@ -14,7 +14,7 @@ public class JdbcTemplate {
 		try {
 			con = DbCon.getCon();
 			ps = con.prepareStatement(sql);
-			result = jdbc.update(ps); // 달라지는 부분 처리
+			jdbc.update(ps); // 달라지는 부분 처리
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -22,7 +22,7 @@ public class JdbcTemplate {
 		}
 		return result;
 	}
-	
+	// select에 사용할 메소드
 	public static int executeQuery(String sql, JdbcSelectInterface jdbc) {
 		int result = 0;
 		Connection con = null;
@@ -32,7 +32,9 @@ public class JdbcTemplate {
 		try {
 			con = DbCon.getCon();
 			ps = con.prepareStatement(sql);
-			rs = jdbc.prepared(ps);
+			jdbc.prepared(ps);
+			
+			rs = ps.executeQuery();
 			result = jdbc.executeQuery(rs);
 		} catch (Exception e) {
 			e.printStackTrace();
