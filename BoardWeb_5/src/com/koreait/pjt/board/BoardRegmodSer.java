@@ -20,6 +20,9 @@ public class BoardRegmodSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String strI_board = request.getParameter("i_board");
+		int i_board = Integer.parseInt(strI_board);
+		request.setAttribute("data", i_board);
 		ViewResolver.forwardLoginChk("board/regmod", request, response);
 	} // 화면 띄우기 ( 등록창 / 수정창 )
 	

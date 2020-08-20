@@ -70,7 +70,7 @@ public class BoardDAO {
 	
 	public static BoardVO selBoard(BoardVO param) {
 		BoardVO vo = new BoardVO();
-		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm "
+		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board "
 				+ " FROM t_board5 A "
 				+ " INNER JOIN t_user B "
 				+ " ON A.i_user = B.i_user "
@@ -87,6 +87,7 @@ public class BoardDAO {
 			public int executeQuery(ResultSet rs) throws SQLException {
 				if(rs.next()) {
 					String title = rs.getNString("title");
+					int i_board = rs.getInt("i_board");
 					int i_user = rs.getInt("i_user");
 					String ctnt = rs.getNString("ctnt");
 					String r_dt = rs.getNString("r_dt");
@@ -94,6 +95,7 @@ public class BoardDAO {
 					String nm = rs.getNString("nm");
 					
 					vo.setTitle(title);
+					vo.setI_board(i_board);
 					vo.setI_user(i_user);
 					vo.setCtnt(ctnt);
 					vo.setR_dt(r_dt);
@@ -104,5 +106,35 @@ public class BoardDAO {
 			}
 		});
 		return vo;
+	}
+	
+	public static void updBoard(BoardVO param) {
+		String sql = " UPDATA SET title = ?, ctnt = ? "
+				+ " WHERE i_board5 = ? ";
+				
+		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+			
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setNString(1, param.getTitle());
+				ps.setNString(2, param.getCtnt());
+				ps.setInt(3, param.getI_board());
+			}
+		});
+	}
+	
+	public static int delBoard(BoardVO param) {
+		String sql = " DELETE FROM t_board5 "
+				+ " WHERE i_board = ? AND i_user = ? ";
+		
+		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, param.getI_board());
+				ps.setInt(2, param.getI_user()); // 작성자가 작성자의 글만 지울 수 있게 하기 위해 필요하다.
+			}
+		});
+		return 1;
 	}
 }

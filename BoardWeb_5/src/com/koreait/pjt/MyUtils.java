@@ -6,8 +6,9 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.koreait.pjt.vo.UserVO;
 
 public class MyUtils {
 //	return으로 true:로그인이 안됨, false:로그인 된 상태
@@ -17,6 +18,11 @@ public class MyUtils {
 			return true;
 		}
 		return false;
+	}
+	
+	public static UserVO getLoginUser(HttpServletRequest request) {
+		HttpSession hs = request.getSession();
+		return (UserVO)hs.getAttribute(Const.LOGIN_USER);
 	}
 	
 	public static String encryptString(String str) {

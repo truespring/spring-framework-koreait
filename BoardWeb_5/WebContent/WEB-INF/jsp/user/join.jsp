@@ -36,7 +36,7 @@
 				<div id="pwre"><label><input type="password" name="user_pwre" placeholder="비밀번호 확인"></label></div>
 				<div id="nm"><input type="text" name="nm" placeholder="이름" required value="${data.nm }"></div>
 				<div id="email"><input type="email" name="email" placeholder="이메일" required value="${data.email }"></div>
-				<div id="btn"><input type="submit" value="회원가입" id="btn_join"></div>
+				<div id="btn"><input type="submit" value="가입하기" id="btn_join"></div>
 			</form>
 		</div>
 	</div>

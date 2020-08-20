@@ -28,9 +28,10 @@
 	<div class="container">
 	<div id="msg">${msg }</div>
 		<form id="frm" action="regmod" method="post">
+			<input type="hidden" name="i_board" value="${data }">
 			<div id="title">제목 <br><input type="text" name="title"></div>
 			<div id="ctnt">내용 <br><textarea name="ctnt" cols="70" rows="10"></textarea></div>
-			<div><input type="submit" id="btn_in" value="글등록"></div>
+			<div><input type="submit" id="btn_in" value="등록하기"></div>
 		</form>
 	</div>
 </body>
