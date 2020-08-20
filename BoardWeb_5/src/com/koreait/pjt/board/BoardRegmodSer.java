@@ -15,18 +15,12 @@ import com.koreait.pjt.db.BoardDAO;
 import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 
-@WebServlet("/regmod")
+@WebServlet("/board/regmod")
 public class BoardRegmodSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession hs = request.getSession();
-		if(null == hs.getAttribute(Const.LOGIN_USER)) {
-			response.sendRedirect("/login");
-			return;
-		}
-		
-		ViewResolver.forward("board/regmod", request, response);
+		ViewResolver.forwardLoginChk("board/regmod", request, response);
 	} // 화면 띄우기 ( 등록창 / 수정창 )
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,7 +46,7 @@ public class BoardRegmodSer extends HttpServlet {
 			doGet(request, response);
 			return;
 		}
-		response.sendRedirect("board/list");
+		response.sendRedirect("/board/list");
 	} // 로직 처리 ( DB에 등록 / 수정 ) 실시
 
 }

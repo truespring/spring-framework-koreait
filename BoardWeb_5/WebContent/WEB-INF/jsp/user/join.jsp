@@ -6,23 +6,37 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <style>
+	#container {
+		width: 600px; height: 600px; margin: 50px auto; text-align: center;
+		border: 1px solid black; padding: 5px;
+	}
 	.err {
 		color: red; font-size: 1.1em;
+	}
+	input {
+		width: 350px; height: 30px; margin-bottom: 20px;
+	}
+	#btn_join {
+		width: 360px; height: 40px; text-align: center; background-color: #03C75A;
+		border: none; color: white; margin: 20px; 
+	}
+	#btn_join:hover {
+		cursor: pointer;
 	}
 </style>
 </head>
 <body>
-	<h1>회원가입</h1>
-	<div class="err">${msg }</div>
 	<div id="container">
+		<h1>회원가입</h1>
+		<div class="err">${msg }</div>
 		<div>
 			<form id="frm" action="/join" method="post" onsubmit="return chk()">
-				<div><label><input type="text" name="user_id" placeholder="아이디" required value="${data.user_id }"></label></div>
-				<div><label><input type="password" name="user_pw" placeholder="비밀번호" required></label></div>
-				<div><label><input type="password" name="user_pwre" placeholder="비밀번호 확인"></label></div>
-				<div><input type="text" name="nm" placeholder="이름" required value="${data.nm }"></div>
-				<div><input type="email" name="email" placeholder="이메일" required value="${data.email }"></div>
-				<div><input type="submit" value="회원가입"></div>
+				<div id="id"><label><input type="text" name="user_id" placeholder="아이디" required value="${data.user_id }"></label></div>
+				<div id="pw"><label><input type="password" name="user_pw" placeholder="비밀번호" required></label></div>
+				<div id="pwre"><label><input type="password" name="user_pwre" placeholder="비밀번호 확인"></label></div>
+				<div id="nm"><input type="text" name="nm" placeholder="이름" required value="${data.nm }"></div>
+				<div id="email"><input type="email" name="email" placeholder="이메일" required value="${data.email }"></div>
+				<div id="btn"><input type="submit" value="회원가입" id="btn_join"></div>
 			</form>
 		</div>
 	</div>
