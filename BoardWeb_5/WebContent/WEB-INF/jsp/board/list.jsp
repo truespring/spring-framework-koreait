@@ -36,6 +36,7 @@
 		<div><span class="nm">${loginUser.nm }</span>님 환영합니다.</div> <!-- 세션을 활용하는 법 -->
 		<div>
 			<a href="regmod">글쓰기</a>
+			<a href="login">로그아웃</a>
 		</div>
 		<table>
 			<tr>

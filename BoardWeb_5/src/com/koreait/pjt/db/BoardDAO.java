@@ -68,6 +68,21 @@ public class BoardDAO {
 		});
 	}
 	
+	public static void addHits(int i_board) {
+		BoardVO vo = new BoardVO();
+		String sql = " UPDATE t_board5 SET hits = hits + 1 "
+				+ " WHERE i_board = ? ";
+		
+		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, i_board);
+			}
+			
+		});
+	}
+	
 	public static BoardVO selBoard(BoardVO param) {
 		BoardVO vo = new BoardVO();
 		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board "
@@ -108,9 +123,9 @@ public class BoardDAO {
 		return vo;
 	}
 	
-	public static void updBoard(BoardVO param) {
-		String sql = " UPDATA SET title = ?, ctnt = ? "
-				+ " WHERE i_board5 = ? ";
+	public static int updBoard(BoardVO param) {
+		String sql = " UPDATE t_board5 SET title = ?, ctnt = ? "
+				+ " WHERE i_board = ? AND i_user = ? ";
 				
 		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 			
@@ -119,8 +134,10 @@ public class BoardDAO {
 				ps.setNString(1, param.getTitle());
 				ps.setNString(2, param.getCtnt());
 				ps.setInt(3, param.getI_board());
+				ps.setInt(4, param.getI_user());
 			}
 		});
+		return 1;
 	}
 	
 	public static int delBoard(BoardVO param) {
