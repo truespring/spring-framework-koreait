@@ -44,6 +44,7 @@
 		<div id="ctnt">내용 : ${data.ctnt }</div>
 		<div id="r_dt">작성일시 : ${data.r_dt }</div>
 		<div id="hits">조회수 : ${data.hits }</div>
+		<div id="yn_like">${data.yn_like == 0 ? '0' : '1' }</div>
 	</div>
 	<script>
 		function submitDel() {

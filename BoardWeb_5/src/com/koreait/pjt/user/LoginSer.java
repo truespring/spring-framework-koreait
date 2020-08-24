@@ -72,7 +72,8 @@ public class LoginSer extends HttpServlet {
 		ulhVO.setOs(os);
 		ulhVO.setIp_addr(ip_addr);
 		ulhVO.setBrowser(browser);
-		UserDAO.insUserLoginHistory(ulhVO);
+		int resultlogin = UserDAO.insUserLoginHistory(ulhVO);
+		System.out.println("resultlogin : " + resultlogin);
 		// 로그인 히스토리 끝
 		
 		// 정상적인 작동을 할 때

@@ -85,17 +85,21 @@ public class BoardDAO {
 	
 	public static BoardVO selBoard(BoardVO param) {
 		BoardVO vo = new BoardVO();
-		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board "
+		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board, DECODE(C.i_user, null, 0, 1) as yn_like "
 				+ " FROM t_board5 A "
 				+ " INNER JOIN t_user B "
 				+ " ON A.i_user = B.i_user "
-				+ " WHERE i_board = ? ";
+				+ " LEFT JOIN t_board5_like C "
+				+ " ON A.i_board = C.i_board "
+				+ " AND C.i_user = ? "
+				+ " WHERE A.i_board = ? ";
 		
 		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 			
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, param.getI_board());
+				ps.setInt(1, param.getI_user());
+				ps.setInt(2, param.getI_board());
 			}
 			
 			@Override
@@ -108,6 +112,7 @@ public class BoardDAO {
 					String r_dt = rs.getNString("r_dt");
 					int hits = rs.getInt("hits");
 					String nm = rs.getNString("nm");
+					int yn_like = rs.getInt("yn_like");
 					
 					vo.setTitle(title);
 					vo.setI_board(i_board);
@@ -116,6 +121,7 @@ public class BoardDAO {
 					vo.setR_dt(r_dt);
 					vo.setHits(hits);
 					vo.setNm(nm);
+					vo.setYn_like(yn_like);
 				}
 				return 1;
 			}

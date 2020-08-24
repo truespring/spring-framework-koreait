@@ -8,13 +8,12 @@ import com.koreait.pjt.vo.UserLoginHistoryVO;
 import com.koreait.pjt.vo.UserVO;
 
 public class UserDAO {
-	public static void insUserLoginHistory(UserLoginHistoryVO ulhVO) {
+	public static int insUserLoginHistory(UserLoginHistoryVO ulhVO) {
 		String sql = " INSERT INTO t_user_loginhistory "
 				+ " (i_history, i_user, ip_addr, os, browser) "
 				+ " VALUES (seq_userloginhistory.nextval, ?, ?, ?, ?) ";
 		
-		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
-
+		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
 				ps.setInt(1, ulhVO.getI_user());

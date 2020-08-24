@@ -40,6 +40,7 @@ public class BoardDetailSer extends HttpServlet {
 		// 단독으로 조회수 올리기 방지 끝 - 혼자서는 조회수를 올리지 못하지만 두 명이서 핑퐁을 하면 조회수가 계속해서 올라간다. 
 		
 		BoardVO param = new BoardVO();
+		param.setI_user(loginUser.getI_user());
 		param.setI_board(i_board);
 
 		BoardVO data = BoardDAO.selBoard(param);
