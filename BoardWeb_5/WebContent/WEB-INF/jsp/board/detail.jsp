@@ -5,22 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상세글</title>
+<title>${data.title }</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 <style>
 	.container {
-		width: 600px; margin: 30px auto;
+		width: 600px; margin: 30px auto; background-color: #b0cac7;
+		padding: 20px;
 	}
 	#title {
 		margin: 20px; height: 40px;
-		line-height: 40px;
+		line-height: 40px; font-size: 2em;
 	}
 	#nm {
 		margin: 20px;
 	}
+	#ctnt {
+		margin: 30px; padding: 10px; width: 600px;
+	}
 	.list, .upd, .del {
-		background-color: #03C75A; border-radius: 50%; width: 50px; height: 50px;
+		border-radius: 50%; width: 50px; height: 50px;
 		display: inline-block; width: 50px; height: 50px; text-align: center;
 	}
 	#list, #upd, #del {
@@ -44,9 +48,9 @@
 				<div class="del"><a href="#" onclick="submitDel()" id="del">삭제</a></div>
 			</form>
 		</c:if>
-		<div id="title">제목 : ${data.title }</div>
-		<div id="nm">작성자 : ${data.nm }</div>
-		<div id="ctnt">내용 : ${data.ctnt }</div>
+		<div id="title">${data.title }</div>
+		<div id="nm">${data.nm }</div>
+		<div id="ctnt">${data.ctnt }</div>
 		<div id="r_dt">작성일시 : ${data.r_dt }</div>
 		<div id="hits">조회수 : ${data.hits }</div>
 		<div id="yn_like">
