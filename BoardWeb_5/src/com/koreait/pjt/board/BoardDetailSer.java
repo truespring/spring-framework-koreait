@@ -27,7 +27,7 @@ public class BoardDetailSer extends HttpServlet {
 			return;
 		}
 		String strI_board = request.getParameter("i_board");
-		int i_board = Integer.parseInt(strI_board);
+		int i_board = MyUtils.parseStrToInt(strI_board);
 		
 		// 단독으로 조회수 올리기 방지 시작
 		ServletContext application = getServletContext(); // 어플리케이션 내장객체 얻어 오기, 부모에게서 가져온 메소드, 어플리케이션에서 가져옴

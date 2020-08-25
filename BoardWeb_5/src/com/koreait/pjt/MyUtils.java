@@ -46,4 +46,16 @@ public class MyUtils {
 
 		return sha;
 	}
+	
+	public static int parseStrToInt(String str) {
+		return parseStrToInt(str, 0);
+	}
+	// 에러를 발생시키지 않게 하기 위해서
+	public static int parseStrToInt(String str, int num) {
+		try {
+			return Integer.parseInt(str);
+		} catch(Exception e) {
+			return num;
+		}
+	}
 }

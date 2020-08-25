@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.koreait.pjt.board.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDAO {
@@ -34,7 +35,7 @@ public class BoardDAO {
 					int i_user = rs.getInt("i_user");
 					String r_dt = rs.getNString("r_dt");
 					
-					BoardVO vo = new BoardVO();
+					BoardDomain vo = new BoardDomain();
 					vo.setI_board(i_board);
 					vo.setTitle(title);
 					vo.setNm(nm);
@@ -83,9 +84,10 @@ public class BoardDAO {
 		});
 	}
 	
-	public static BoardVO selBoard(BoardVO param) {
-		BoardVO vo = new BoardVO();
-		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board, DECODE(C.i_user, null, 0, 1) as yn_like "
+	public static BoardDomain selBoard(BoardVO param) {
+		BoardDomain vo = new BoardDomain();
+		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board, DECODE(C.i_user, null, 0, 1) as yn_like, "
+				+ " (SELECT count(*) FROM t_board5_like WHERE i_board = ?) as like_cnt "
 				+ " FROM t_board5 A "
 				+ " INNER JOIN t_user B "
 				+ " ON A.i_user = B.i_user "
@@ -98,8 +100,9 @@ public class BoardDAO {
 			
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, param.getI_user());
-				ps.setInt(2, param.getI_board());
+				ps.setInt(1, param.getI_board());
+				ps.setInt(2, param.getI_user());
+				ps.setInt(3, param.getI_board());
 			}
 			
 			@Override
@@ -110,6 +113,7 @@ public class BoardDAO {
 					int i_user = rs.getInt("i_user"); // 작성자 i_user
 					String ctnt = rs.getNString("ctnt");
 					String r_dt = rs.getNString("r_dt");
+					int like_cnt = rs.getInt("like_cnt");
 					int hits = rs.getInt("hits");
 					String nm = rs.getNString("nm");
 					int yn_like = rs.getInt("yn_like");
@@ -119,6 +123,7 @@ public class BoardDAO {
 					vo.setI_user(i_user);
 					vo.setCtnt(ctnt);
 					vo.setR_dt(r_dt);
+					vo.setLike_cnt(like_cnt);
 					vo.setHits(hits);
 					vo.setNm(nm);
 					vo.setYn_like(yn_like);
@@ -160,14 +165,14 @@ public class BoardDAO {
 		});
 		return 1;
 	}
-	
+	// 좋아요 기능
 	public static int likeBoard(BoardVO param) {
 		String sql = " INSERT INTO t_board5_like " + 
 				" (i_user, i_board) " + 
 				" VALUES " + 
 				" (?, ?) " ;
 		
-		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
@@ -175,14 +180,13 @@ public class BoardDAO {
 				ps.setInt(2, param.getI_board());				
 			}			
 		});
-		return 1;
 	}
-	
+	// 좋아요 취소 기능
 	public static int dislikeBoard(BoardVO param) {
 		String sql = " DELETE FROM t_board5_like "
 				+ " WHERE i_user = ? AND i_board = ? ";
 		
-		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
@@ -190,6 +194,5 @@ public class BoardDAO {
 				ps.setInt(2, param.getI_board());
 			}
 		});
-		return 1;
 	}
 }

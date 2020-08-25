@@ -19,7 +19,7 @@ public class BoardDelSer extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String strI_board = request.getParameter("i_board");
-		int i_board = Integer.parseInt(strI_board);
+		int i_board = MyUtils.parseStrToInt(strI_board);
 		
 		UserVO loginUser = MyUtils.getLoginUser(request); // 현재 로그인 사람의 정보를 가져온다.
 		

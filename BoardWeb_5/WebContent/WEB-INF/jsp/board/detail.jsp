@@ -58,6 +58,7 @@
 					<span class="material-icons" style="color: red">favorite_border</span>
 				</c:if>
 			</span>
+			<span>${data.like_cnt }</span>
 		</div>
 	</div>
 	<script>
@@ -67,7 +68,7 @@
 		
 		function toggleLike(yn_like) {
 			location.href="/board/toggleLike?i_board=${data.i_board}&yn_like=" + yn_like
-		}
+		}									// 키값		벨류값
 	</script>
 </body>
 </html>
