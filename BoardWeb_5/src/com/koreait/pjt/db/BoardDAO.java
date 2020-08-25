@@ -107,7 +107,7 @@ public class BoardDAO {
 				if(rs.next()) {
 					String title = rs.getNString("title");
 					int i_board = rs.getInt("i_board");
-					int i_user = rs.getInt("i_user");
+					int i_user = rs.getInt("i_user"); // 작성자 i_user
 					String ctnt = rs.getNString("ctnt");
 					String r_dt = rs.getNString("r_dt");
 					int hits = rs.getInt("hits");
@@ -156,6 +156,38 @@ public class BoardDAO {
 			public void update(PreparedStatement ps) throws SQLException {
 				ps.setInt(1, param.getI_board());
 				ps.setInt(2, param.getI_user()); // 작성자가 작성자의 글만 지울 수 있게 하기 위해 필요하다.
+			}
+		});
+		return 1;
+	}
+	
+	public static int likeBoard(BoardVO param) {
+		String sql = " INSERT INTO t_board5_like " + 
+				" (i_user, i_board) " + 
+				" VALUES " + 
+				" (?, ?) " ;
+		
+		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, param.getI_user());
+				ps.setInt(2, param.getI_board());				
+			}			
+		});
+		return 1;
+	}
+	
+	public static int dislikeBoard(BoardVO param) {
+		String sql = " DELETE FROM t_board5_like "
+				+ " WHERE i_user = ? AND i_board = ? ";
+		
+		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, param.getI_user());
+				ps.setInt(2, param.getI_board());
 			}
 		});
 		return 1;

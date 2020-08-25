@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>상세글</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <style>
 	.container {
 		width: 600px; margin: 30px auto;
@@ -27,6 +29,9 @@
 	#delFrm {
 		display: inline-block;
 	}
+	.pointerCursor:hover {
+		 cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -44,11 +49,24 @@
 		<div id="ctnt">내용 : ${data.ctnt }</div>
 		<div id="r_dt">작성일시 : ${data.r_dt }</div>
 		<div id="hits">조회수 : ${data.hits }</div>
-		<div id="yn_like">${data.yn_like == 0 ? '0' : '1' }</div>
+		<div id="yn_like">
+			<span onclick="toggleLike(${data.yn_like})" class="pointerCursor">
+				<c:if test="${data.yn_like == 1 }">
+					<span class="material-icons" style="color: red">favorite</span>
+				</c:if>
+				<c:if test="${data.yn_like == 0 }">
+					<span class="material-icons" style="color: red">favorite_border</span>
+				</c:if>
+			</span>
+		</div>
 	</div>
 	<script>
 		function submitDel() {
 			delFrm.submit()
+		}
+		
+		function toggleLike(yn_like) {
+			location.href="/board/toggleLike?i_board=${data.i_board}&yn_like=" + yn_like
 		}
 	</script>
 </body>
