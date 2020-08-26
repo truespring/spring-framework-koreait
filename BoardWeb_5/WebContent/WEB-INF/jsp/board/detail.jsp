@@ -36,6 +36,12 @@
 	.pointerCursor:hover {
 		 cursor: pointer;
 	}
+	#cmt {
+		width: 400px; margin: 20px;
+	}
+	.commentlist {
+		margin-top: 10px;
+	}
 </style>
 </head>
 <body>
@@ -63,6 +69,33 @@
 				</c:if>
 			</span>
 			<span>${data.like_cnt }</span>
+			<p id="comment"></p>
+		</div>
+		<div>
+			<form id="cmtFrm" action="/board/cmt" method="post">
+				<input type="hidden" name="i_cmt" value="0">
+				<input type="hidden" name="i_board" value="${data.i_board }">
+				<div>
+					<input type="text" id="cmt" name="cmt" placeholder="댓글내용">
+					<input type="submit" value="작성완료">
+				</div>
+			</form>
+			<div class="commentlist">
+				<table>
+					<tr>
+						<th>내용</th>
+						<th>글쓴이</th>
+						<th>등록일</th>
+					</tr>
+					<c:forEach items="${list }" var="item">
+						<tr>
+							<th>${item.cmt }</th>
+							<th>${item.nm }</th>
+							<th>${item.r_dt }</th>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
 		</div>
 	</div>
 	<script>
