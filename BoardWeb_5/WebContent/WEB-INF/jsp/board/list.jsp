@@ -49,7 +49,7 @@
 			<c:forEach items="${list}" var="item">
 				<tr class="itemRow" onclick="moveToDetail(${item.i_board})">
 					<td>${item.i_board }</td>
-					<td>${item.title }</td>
+					<td>${item.title }[${item.cmt_cnt }]</td>
 					<td>${item.nm }</td>
 					<td>${item.hits }</td>
 					<td>${item.r_dt }</td>

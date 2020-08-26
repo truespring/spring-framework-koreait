@@ -4,7 +4,16 @@ import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDomain extends BoardVO {
 	private int like_cnt;
+	private int cmt_cnt;
 	private String nm;
+
+	public int getCmt_cnt() {
+		return cmt_cnt;
+	}
+
+	public void setCmt_cnt(int cmt_cnt) {
+		this.cmt_cnt = cmt_cnt;
+	}
 
 	public String getNm() {
 		return nm;

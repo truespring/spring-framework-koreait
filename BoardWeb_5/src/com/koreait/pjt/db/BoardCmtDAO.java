@@ -14,14 +14,14 @@ public class BoardCmtDAO {
 	public static List<BoardCmtDomain> selCmtList(int i_board) {
 		final List<BoardCmtDomain> list = new ArrayList();
 		
-		String sql = " SELECT B.nm, A.cmt, A.r_dt "
+		String sql = " SELECT A.i_cmt, B.nm, A.cmt, A.r_dt, A.i_user "
 				+ " FROM t_board5_cmt A "
 				+ " INNER JOIN t_user B "
 				+ " ON A.i_user = B.i_user "
-				+ " WHERE i_board = ? "
-				+ " ORDER BY i_cmt DESC ";
+				+ " WHERE A.i_board = ? "
+				+ " ORDER BY i_cmt "; // r_dt로 하지 않은 이유는 String 타입은 느리기 때문
 		
-		int result = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
@@ -33,16 +33,20 @@ public class BoardCmtDAO {
 				while(rs.next()) {
 					String nm = rs.getNString("nm");
 					String cmt = rs.getNString("cmt");
-					int r_dt = rs.getInt("r_dt");
+					String r_dt = rs.getNString("r_dt");
+					int i_cmt = rs.getInt("i_cmt");
+					int i_user = rs.getInt("i_user"); // 수정과 삭제를 위해서 필요하다
 					
 					BoardCmtDomain vo = new BoardCmtDomain();
+					vo.setI_cmt(i_cmt);
 					vo.setNm(nm);
 					vo.setCmt(cmt);
 					vo.setR_dt(r_dt);
+					vo.setI_user(i_user);
 					
 					list.add(vo);
 				}
-				return 1;
+				return 1; // 쓰지 않는 값
 			}
 		});
 		return list;
@@ -85,14 +89,14 @@ public class BoardCmtDAO {
 		return 0;
 	}
 	public static int delCmt(BoardCmtVO param) {
-		String sql = " DELECT FROM t_board5_cmt "
-				+ " WHERE i_board = ? AND i_user = ? ";
+		String sql = " DELETE FROM t_board5_cmt "
+				+ " WHERE i_cmt = ? AND i_user = ? ";
 		
 		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, param.getI_board());
+				ps.setInt(1, param.getI_cmt());
 				ps.setInt(2, param.getI_user());
 			}
 		});	

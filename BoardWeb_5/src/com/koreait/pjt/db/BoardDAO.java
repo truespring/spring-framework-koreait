@@ -10,11 +10,12 @@ import com.koreait.pjt.board.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDAO {
-	public static List<BoardVO> selBoardList() {
+	public static List<BoardVO> selBoardList(int i_board) {
 		final List<BoardVO> list = new ArrayList();
 		// 주소값을 고정시키는 것이고 내부의 값들은 변경이 가능하다.
 		
-		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
+		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, "
+				+ " (SELECT count(*) FROM t_board5_cmt WHERE i_board = ? ) as cmt_cnt "
 				+ " FROM t_board5 A "
 				+ " INNER JOIN t_user B "
 				+ " ON A.i_user = B.i_user "
@@ -23,7 +24,9 @@ public class BoardDAO {
 		int result = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
 			@Override
-			public void prepared(PreparedStatement ps) throws SQLException {}
+			public void prepared(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, i_board);
+			}
 
 			@Override
 			public int executeQuery(ResultSet rs) throws SQLException {
@@ -34,6 +37,7 @@ public class BoardDAO {
 					int hits = rs.getInt("hits");
 					int i_user = rs.getInt("i_user");
 					String r_dt = rs.getNString("r_dt");
+					int cmt_cnt = rs.getInt("cmt_cnt");
 					
 					BoardDomain vo = new BoardDomain();
 					vo.setI_board(i_board);
@@ -42,6 +46,7 @@ public class BoardDAO {
 					vo.setHits(hits);
 					vo.setI_user(i_user);
 					vo.setR_dt(r_dt);
+					vo.setCmt_cnt(cmt_cnt);
 					
 					list.add(vo);
 				}

@@ -83,15 +83,27 @@
 			<div class="commentlist">
 				<table>
 					<tr>
-						<th>내용</th>
 						<th>글쓴이</th>
+						<th>내용</th>
 						<th>등록일</th>
 					</tr>
 					<c:forEach items="${list }" var="item">
 						<tr>
-							<th>${item.cmt }</th>
 							<th>${item.nm }</th>
+							<th>${item.cmt }</th>
 							<th>${item.r_dt }</th>
+							<c:if test="${loginUser.i_user == item.i_user }">
+								<th>
+									<form action="/board/cmt" method="post">
+										<button>수정</button>
+									</form>
+								</th>
+								<th>
+									<a href="/board/cmt?i_cmt=${item.i_cmt }&i_board=${data.i_board}">
+										<button>삭제</button>
+									</a>
+								</th>
+							</c:if>
 						</tr>
 					</c:forEach>
 				</table>
@@ -99,6 +111,10 @@
 		</div>
 	</div>
 	<script>
+		function submitCmtDel() {
+			
+		}
+	
 		function submitDel() {
 			delFrm.submit()
 		}
@@ -106,6 +122,8 @@
 		function toggleLike(yn_like) {
 			location.href="/board/toggleLike?i_board=${data.i_board}&yn_like=" + yn_like
 		}									// 키값		벨류값
+		
+		
 	</script>
 </body>
 </html>

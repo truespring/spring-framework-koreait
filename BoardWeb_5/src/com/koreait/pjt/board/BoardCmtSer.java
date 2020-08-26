@@ -19,7 +19,23 @@ public class BoardCmtSer extends HttpServlet {
        
 	// 댓글 삭제
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int i_cmt = MyUtils.getIntParameter(request, "i_cmt");
+		int i_board = MyUtils.getIntParameter(request, "i_board");
+		System.out.println("i_cmt : " + i_cmt);
+		System.out.println("i_board : " + i_board);
 		
+		UserVO loginUser = MyUtils.getLoginUser(request);
+		
+		BoardCmtVO param = new BoardCmtVO();
+		
+		int i_user = loginUser.getI_user();
+		param.setI_user(i_user);
+		param.setI_cmt(i_cmt);
+		param.setI_board(i_board);
+		
+		int result = BoardCmtDAO.delCmt(param);
+		System.out.println("삭제 성공 : " + result);
+		response.sendRedirect("/board/detail?i_board="+i_board);
 	}
 
 	// 댓글 (등록 / 수정)
@@ -41,13 +57,13 @@ public class BoardCmtSer extends HttpServlet {
 		case "0": // 등록
 			param.setI_user(i_user);
 			result = BoardCmtDAO.insCmt(param);
-			System.out.println("글 등록 : " + result);
+			System.out.println("댓글 등록 : " + result);
 			break;
 		default: // 수정
 			int i_cmt = MyUtils.parseStrToInt(strI_cmt);
 			param.setI_cmt(i_cmt);
 			result = BoardCmtDAO.updCmt(param);
-			System.out.println("글 수정 : " + result);
+			System.out.println("댓글 수정 : " + result);
 			break;
 		}
 		response.sendRedirect("/board/detail?i_board=" + strI_board);
