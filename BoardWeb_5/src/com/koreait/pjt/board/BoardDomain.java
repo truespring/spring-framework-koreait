@@ -9,7 +9,16 @@ public class BoardDomain extends BoardVO {
 	private int recode_cnt; // 페이지 당 나온는 레코드 수
 	private int sldx;
 	private int eldx;
+	private int page;
 	
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
 	public int getSldx() {
 		return sldx;
 	}
