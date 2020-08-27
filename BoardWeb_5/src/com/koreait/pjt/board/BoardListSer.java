@@ -26,12 +26,22 @@ public class BoardListSer extends HttpServlet {
 			return;
 		}
 		
+		int page = MyUtils.getIntParameter(request, "page");
+		int i_board = MyUtils.getIntParameter(request, "i_board");
+		page = page == 0 ? 1 : page;
+		System.out.println("page : " + page);
+		
 		BoardDomain param = new BoardDomain();
 		param.setRecode_cnt(Const.RECORD_CNT);
+		param.setI_board(i_board);
 		
+		int eldx = page * Const.RECORD_CNT;
+		int sldx = eldx - Const.RECORD_CNT;
 		
-		int i_board = MyUtils.getIntParameter(request, "i_board");
-		request.setAttribute("list", BoardDAO.selBoardList(i_board));
+		param.setEldx(eldx);
+		param.setSldx(sldx);
+		
+		request.setAttribute("list", BoardDAO.selBoardList(param));
 		request.setAttribute("pagingCnt", BoardDAO.selPagingCnt(param));
 		
 		ViewResolver.forwardLoginChk("board/list", request, response);

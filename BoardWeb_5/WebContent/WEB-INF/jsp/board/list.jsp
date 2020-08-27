@@ -56,9 +56,9 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<!--<c:forEach items="${pagingCnt }" var="page">
-			<a href="${page.recode_cnt }"></a>
-		</c:forEach> -->
+		<c:forEach begin='1' end='${pagingCnt }' var="page">
+			<a href='/board/list?page=${page}'>${page}</a>
+		</c:forEach>
 	</div>
 	<script>
 		function moveToDetail(i_board) {

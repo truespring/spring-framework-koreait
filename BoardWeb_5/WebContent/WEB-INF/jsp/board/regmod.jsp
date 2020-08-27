@@ -27,12 +27,25 @@
 <body>
 	<div class="container">
 	<div id="msg">${msg }</div>
-		<form id="frm" action="regmod" method="post">
+		<form id="frm" action="regmod" method="post" onsubmit="return chk()">
 			<input type="hidden" name="i_board" value="${data.i_board }">
 			<div id="title">제목 <br><input type="text" name="title" value="${data.title }"></div>
 			<div id="ctnt">내용 <br><textarea name="ctnt" cols="70" rows="10">${data.ctnt }</textarea></div>
 			<div><input type="submit" id="btn_in" value='${data.i_board == null ? "등록하기" : "수정하기" }'></div>
 		</form>
 	</div>
+	<script>
+		function chk() {
+			if(frm.title.value.length <= 0) {
+				alert('제목을 입력하세요')
+				frm.title.focus()
+				return false
+			} else if (frm.ctnt.value <= 0) {
+				alert('내용을 입력하세요')
+				frm.ctnt.focus()
+				return false
+			}
+		}
+	</script>
 </body>
 </html>

@@ -10,7 +10,7 @@ import com.koreait.pjt.board.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDAO {
-	public static List<BoardVO> selBoardList(int i_board) {
+	public static List<BoardVO> selBoardList(BoardDomain param) {
 		final List<BoardVO> list = new ArrayList();
 		// 주소값을 고정시키는 것이고 내부의 값들은 변경이 가능하다.
 		
@@ -23,23 +23,34 @@ public class BoardDAO {
 ////				+ " FROM t_board5_cmt GROUP BY i_board) C "
 //				+ " ORDER BY i_board DESC " ;
 		
-		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, C.cmt_cnt " + 
-				" FROM t_board5 A " + 
-				" INNER JOIN t_user B " + 
-				" ON A.i_user = B.i_user " + 
-				" LEFT JOIN (" + 
-				" SELECT i_board, count(i_board) as cmt_cnt " + 
-				" FROM t_board5_cmt\r\n" + 
-				" group by i_board " + 
-				" )C " + 
-				" ON A.i_board = C.i_board " + 
-				" ORDER BY A.i_board DESC ";
+//		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, C.cmt_cnt " + 
+//				" FROM t_board5 A " + 
+//				" INNER JOIN t_user B " + 
+//				" ON A.i_user = B.i_user " + 
+//				" LEFT JOIN (" + 
+//				" SELECT i_board, count(i_board) as cmt_cnt " + 
+//				" FROM t_board5_cmt" + 
+//				" group by i_board " + 
+//				" )C " + 
+//				" ON A.i_board = C.i_board " + 
+//				" ORDER BY A.i_board DESC ";
+		
+		String sql = " SELECT A.* FROM "
+				+ " (SELECT ROWNUM as RNUM, A.* FROM "
+				+ " (SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, C.cmt_cnt "
+				+ " FROM t_board5 A INNER JOIN t_user B ON A.i_user = B.i_user "
+				+ " LEFT JOIN ( SELECT i_board, count(i_board) as cmt_cnt "
+				+ " FROM t_board5_cmt GROUP BY i_board)C ON A.i_board = C.i_board "
+				+ " ORDER BY A.i_board DESC) A "
+				+ " WHERE ROWNUM <= ? ) A "
+				+ " WHERE A.RNUM > ? ";
 		
 		int result = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
-//				ps.setInt(1, i_board);
+				ps.setInt(1, param.getEldx());
+				ps.setInt(2, param.getSldx());
 			}
 
 			@Override
