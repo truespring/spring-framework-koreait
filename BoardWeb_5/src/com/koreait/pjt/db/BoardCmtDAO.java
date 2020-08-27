@@ -72,22 +72,19 @@ public class BoardCmtDAO {
 	public static int updCmt(BoardCmtVO param) {
 		String sql = " UPDATE t_board5_cmt "
 				+ " SET cmt = ? "
-				+ " WHERE i_board = ? AND i_user = ? AND i_cmt ";
+				+ " WHERE i_user = ? AND i_cmt = ? ";
 		
-		JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
 				ps.setNString(1, param.getCmt());
-				ps.setInt(2, param.getI_board());
-				ps.setInt(3, param.getI_user());
-				ps.setInt(4, param.getI_cmt());
+				ps.setInt(2, param.getI_user());
+				ps.setInt(3, param.getI_cmt());
 			}
-			
 		});
-		
-		return 0;
 	}
+	
 	public static int delCmt(BoardCmtVO param) {
 		String sql = " DELETE FROM t_board5_cmt "
 				+ " WHERE i_cmt = ? AND i_user = ? ";

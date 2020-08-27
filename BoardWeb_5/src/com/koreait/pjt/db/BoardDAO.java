@@ -14,12 +14,26 @@ public class BoardDAO {
 		final List<BoardVO> list = new ArrayList();
 		// 주소값을 고정시키는 것이고 내부의 값들은 변경이 가능하다.
 		
-		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
-//				+ ", (SELECT count(*) FROM t_board5_cmt WHERE i_board = ? ) as cmt_cnt "
-				+ " FROM t_board5 A "
-				+ " INNER JOIN t_user B "
-				+ " ON A.i_user = B.i_user "
-				+ " ORDER BY i_board DESC " ;
+//		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
+////				+ ", (SELECT count(*) FROM t_board5_cmt WHERE i_board = ? ) as cmt_cnt "
+//				+ " FROM t_board5 A "
+//				+ " INNER JOIN t_user B "
+//				+ " ON A.i_user = B.i_user "
+////				+ " LEFT JOIN ( SELECT count(i_board) as cmt_cnt "
+////				+ " FROM t_board5_cmt GROUP BY i_board) C "
+//				+ " ORDER BY i_board DESC " ;
+		
+		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, C.cmt_cnt " + 
+				" FROM t_board5 A " + 
+				" INNER JOIN t_user B " + 
+				" ON A.i_user = B.i_user " + 
+				" LEFT JOIN (" + 
+				" SELECT i_board, count(i_board) as cmt_cnt " + 
+				" FROM t_board5_cmt\r\n" + 
+				" group by i_board " + 
+				" )C " + 
+				" ON A.i_board = C.i_board " + 
+				" ORDER BY A.i_board DESC ";
 		
 		int result = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
@@ -37,7 +51,7 @@ public class BoardDAO {
 					int hits = rs.getInt("hits");
 					int i_user = rs.getInt("i_user");
 					String r_dt = rs.getNString("r_dt");
-//					int cmt_cnt = rs.getInt("cmt_cnt");
+					int cmt_cnt = rs.getInt("cmt_cnt");
 					
 					BoardDomain vo = new BoardDomain();
 					vo.setI_board(i_board);
@@ -46,7 +60,7 @@ public class BoardDAO {
 					vo.setHits(hits);
 					vo.setI_user(i_user);
 					vo.setR_dt(r_dt);
-//					vo.setCmt_cnt(cmt_cnt);
+					vo.setCmt_cnt(cmt_cnt);
 					
 					list.add(vo);
 				}

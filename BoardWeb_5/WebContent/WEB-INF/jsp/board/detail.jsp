@@ -10,7 +10,7 @@
       rel="stylesheet">
 <style>
 	.container {
-		width: 600px; margin: 30px auto; background-color: #b0cac7;
+		width: 800px; margin: 30px auto; background-color: #b0cac7;
 		padding: 20px;
 	}
 	#title {
@@ -77,7 +77,8 @@
 				<input type="hidden" name="i_board" value="${data.i_board }">
 				<div>
 					<input type="text" id="cmt" name="cmt" placeholder="댓글내용">
-					<input type="submit" value="작성완료">
+					<input type="submit" id="cmtSubmit" value="작성완료">
+					<input type="button" value="취소" onclick="clkCmtCancel()">
 				</div>
 			</form>
 			<div class="commentlist">
@@ -92,18 +93,10 @@
 							<th>${item.nm }</th>
 							<th>${item.cmt }</th>
 							<th>${item.r_dt }</th>
-							<c:if test="${loginUser.i_user == item.i_user }">
-								<th>
-									<form action="/board/cmt" method="post">
-										<button>수정</button>
-									</form>
-								</th>
-								<th>
-									<a href="/board/cmt?i_cmt=${item.i_cmt }&i_board=${data.i_board}">
-										<button>삭제</button>
-									</a>
-								</th>
-							</c:if>
+							<c:if test="${item.i_user == loginUser.i_user}">
+        						<th><button onclick="clkCmtDel(${item.i_cmt})">삭제</button></th>
+        						<th><button onclick="clkCmtMod(${item.i_cmt}, '${item.cmt}')">수정</button></th>
+        					</c:if>
 						</tr>
 					</c:forEach>
 				</table>
@@ -111,16 +104,34 @@
 		</div>
 	</div>
 	<script>
-		function submitCmtDel() {
-			
+	function clkCmtDel(i_cmt) {
+		if(confirm('삭제 하시겠습니까?')) {
+			location.href = '/board/cmt?i_board=${data.i_board}&i_cmt=' + i_cmt
 		}
+	}
+	
+	function clkCmtCancel() {
+		cmtFrm.i_cmt.value = 0
+		cmtFrm.cmt.value = ''  //홑따옴표
+		cmtSubmit.value = '작성완료'
+	}
+
+	//댓글 수정
+	function clkCmtMod(i_cmt, cmt) {
+		console.log('i_cmt : ' + i_cmt)
+		
+		cmtFrm.i_cmt.value = i_cmt
+		cmtFrm.cmt.value = cmt
+		
+		cmtSubmit.value = '수정'
+	}
 	
 		function submitDel() {
 			delFrm.submit()
 		}
 		
 		function toggleLike(yn_like) {
-			location.href="/board/toggleLike?i_board=${data.i_board}&yn_like=" + yn_like
+			location.href='/board/toggleLike?i_board=${data.i_board}&yn_like=' + yn_like
 		}									// 키값		벨류값
 		
 		

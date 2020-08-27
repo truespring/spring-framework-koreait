@@ -51,11 +51,11 @@ public class BoardCmtSer extends HttpServlet {
 		BoardCmtVO param = new BoardCmtVO();
 		param.setCmt(cmt);
 		param.setI_board(i_board);
+		param.setI_user(i_user);
 		int result;
 		
 		switch(strI_cmt) {
 		case "0": // 등록
-			param.setI_user(i_user);
 			result = BoardCmtDAO.insCmt(param);
 			System.out.println("댓글 등록 : " + result);
 			break;
