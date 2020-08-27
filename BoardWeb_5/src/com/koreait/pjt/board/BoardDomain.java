@@ -6,6 +6,15 @@ public class BoardDomain extends BoardVO {
 	private int like_cnt;
 	private int cmt_cnt;
 	private String nm;
+	private int recode_cnt; // 페이지 당 나온는 레코드 수
+	
+	public int getRecode_cnt() {
+		return recode_cnt;
+	}
+
+	public void setRecode_cnt(int recode_cnt) {
+		this.recode_cnt = recode_cnt;
+	}
 
 	public int getCmt_cnt() {
 		return cmt_cnt;

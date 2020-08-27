@@ -153,6 +153,27 @@ public class BoardDAO {
 		return vo;
 	}
 	
+	// 페이징 가져오기
+	public static int selPagingCnt(final BoardDomain param) {
+		String sql = " SELECT CEIL(count(i_board) / ?) FROM t_board5 ";
+		
+		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+			
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, param.getRecode_cnt());
+			}
+			
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				if(rs.next()) {
+					return rs.getInt(1); // 첫 번째 컬럼 값(CEIL(count(i_board) / ? )을 가져온다.
+				}
+				return 0;
+			}
+		});
+	}
+	
 	public static int updBoard(BoardVO param) {
 		String sql = " UPDATE t_board5 SET title = ?, ctnt = ? "
 				+ " WHERE i_board = ? AND i_user = ? ";

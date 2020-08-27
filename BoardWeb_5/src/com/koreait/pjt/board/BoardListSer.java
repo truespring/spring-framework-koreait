@@ -21,10 +21,18 @@ public class BoardListSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String strI_board = request.getParameter("i_board");
-		int i_board = MyUtils.parseStrToInt(strI_board);
-		List<BoardVO> list = BoardDAO.selBoardList(i_board);
-		request.setAttribute("list", list);
+		if(MyUtils.isLogout(request)) {
+			response.sendRedirect("/login");
+			return;
+		}
+		
+		BoardDomain param = new BoardDomain();
+		param.setRecode_cnt(Const.RECORD_CNT);
+		
+		
+		int i_board = MyUtils.getIntParameter(request, "i_board");
+		request.setAttribute("list", BoardDAO.selBoardList(i_board));
+		request.setAttribute("pagingCnt", BoardDAO.selPagingCnt(param));
 		
 		ViewResolver.forwardLoginChk("board/list", request, response);
 		
