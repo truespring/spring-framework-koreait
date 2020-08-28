@@ -46,6 +46,7 @@
 		<div>
 			<form action="/board/list" method="get" id="selFrm">
 				<input type="hidden" name="page" value="${page }">
+				<input type="hidden" name="searchText" value="${param.searchText}">
 				레코드 수 :
 				<select id="record_cnt" name="record_cnt" onchange="changeRecordCnt()">
 					<c:forEach begin="10" end="30" step="10" var="item"> 
@@ -64,6 +65,7 @@
 		<div>
 			<a href="regmod">글쓰기</a>
 			<a href="/logout">로그아웃</a>
+			<a href="/profile">프로필</a>
 		</div>
 		<table>
 			<tr>
@@ -83,6 +85,12 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<div>
+			<form action="/board/list" id="serFrm">
+				<input type="text" name="searchText" value="${param.searchText }">
+				<input type="submit" value="검색">
+			</form>
+		</div>
 		<c:forEach begin='1' end='${pagingCnt }' var="item">
 			<c:choose>
 				<c:when test="${page == item}">
@@ -90,7 +98,7 @@
 				</c:when>
 				<c:otherwise>
 					<span class="pagingFont">
-						<a href="/board/list?page=${item}&record_cnt=${param.record_cnt}">${item}</a>
+						<a href="/board/list?page=${item}&record_cnt=${param.record_cnt}&searchText=${param.searchText}">${item}</a>
 					</span>
 				</c:otherwise>
 			</c:choose>
@@ -102,7 +110,7 @@
 		}
 	
 		function moveToDetail(i_board) {
-			location.href = '/board/detail?page=${page}&record_cnt=${param.record_cnt}&i_board=' + i_board
+			location.href = '/board/detail?page=${page}&record_cnt=${param.record_cnt}&i_board=' + i_board + '&searchText=${param.searchText}'
 		}
 	</script>
 </body>

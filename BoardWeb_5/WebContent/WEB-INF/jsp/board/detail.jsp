@@ -47,7 +47,7 @@
 <body>
 	<div class="container">
 		<div class="list">
-             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}">목록</a>
+             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}">목록</a>
         </div>
 		<c:if test="${loginUser.i_user == data.i_user }">
 			<div class="upd"><a href="/board/regmod?i_board=${data.i_board }" id="upd">수정</a></div>

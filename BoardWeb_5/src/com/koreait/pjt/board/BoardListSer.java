@@ -7,7 +7,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
@@ -22,6 +21,11 @@ public class BoardListSer extends HttpServlet {
 			response.sendRedirect("/login");
 			return;
 		}
+		
+		// 검색을 위한 변수
+		String searchText = request.getParameter("searchText");
+		searchText = (searchText == null ? "" : searchText);
+		
 		// 레코드 갯수
 		int recordCnt = MyUtils.getIntParameter(request, "record_cnt");
 		recordCnt = (recordCnt == 0 ? 10 : recordCnt);
@@ -33,6 +37,7 @@ public class BoardListSer extends HttpServlet {
 		BoardDomain param = new BoardDomain();
 		int i_board = MyUtils.getIntParameter(request, "i_board");
 
+		param.setSearchText("%" + searchText + "%");
 		param.setRecord_cnt(recordCnt);
 		int pagingCnt = BoardDAO.selPagingCnt(param); // 페이지의 갯수(총 레코드/한 페이지 레코드)
 		
@@ -43,12 +48,12 @@ public class BoardListSer extends HttpServlet {
 		request.setAttribute("page", page);
 		System.out.println("page : " + page);
 		
-		int eldx = page * recordCnt;
-		int sldx = eldx - recordCnt;
+		int eIdx = page * recordCnt;
+		int sIdx = eIdx - recordCnt;
 		
 		param.setI_board(i_board);
-		param.setEIdx(eldx);
-		param.setSIdx(sldx);
+		param.seteIdx(eIdx);
+		param.setsIdx(sIdx);
 		
 		request.setAttribute("list", BoardDAO.selBoardList(param));
 		request.setAttribute("pagingCnt", BoardDAO.selPagingCnt(param));

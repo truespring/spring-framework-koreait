@@ -10,6 +10,8 @@ public class BoardDomain extends BoardVO {
 	private int sIdx;
 	private int eIdx;
 	private int page;
+	private String searchText;
+	
 	
 	public int getPage() {
 		return page;
@@ -19,20 +21,28 @@ public class BoardDomain extends BoardVO {
 		this.page = page;
 	}
 
-	public int getSIdx() {
+	public int getsIdx() {
 		return sIdx;
 	}
 
-	public void setSIdx(int sIdx) {
+	public void setsIdx(int sIdx) {
 		this.sIdx = sIdx;
 	}
 
-	public int getEIdx() {
+	public int geteIdx() {
 		return eIdx;
 	}
 
-	public void setEIdx(int eIdx) {
+	public void seteIdx(int eIdx) {
 		this.eIdx = eIdx;
+	}
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
 	}
 
 	public int getRecord_cnt() {
