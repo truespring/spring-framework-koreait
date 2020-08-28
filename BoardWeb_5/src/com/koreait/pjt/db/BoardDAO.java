@@ -49,8 +49,8 @@ public class BoardDAO {
 
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, param.getEldx());
-				ps.setInt(2, param.getSldx());
+				ps.setInt(1, param.getEIdx());
+				ps.setInt(2, param.getSIdx());
 			}
 
 			@Override
@@ -172,7 +172,7 @@ public class BoardDAO {
 			
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, param.getRecode_cnt());
+				ps.setInt(1, param.getRecord_cnt());
 			}
 			
 			@Override

@@ -31,6 +31,12 @@
  	#now_page {
  		color: blue; font-size: 2em;
  	}
+ 	.pagingFont {
+		font-size: 2em; color: red;
+	}
+	.pagingFont:not(:first-child) {
+		margin-left: 13px;
+	}
 </style>
 </head>
 <body>
@@ -39,16 +45,18 @@
 		<div><span class="nm">${loginUser.nm }</span>님 환영합니다.</div> <!-- 세션을 활용하는 법 -->
 		<div>
 			<form action="/board/list" method="get" id="selFrm">
-				<input type="hidden" name="page" value="${param.page == null ? 1 : param.page }">
+				<input type="hidden" name="page" value="${page }">
 				레코드 수 :
 				<select id="record_cnt" name="record_cnt" onchange="changeRecordCnt()">
 					<c:forEach begin="10" end="30" step="10" var="item"> 
 						<c:choose>
-							<c:when test="${param.record_cnt == item || (param.record_cnt == null && item == 10) }" >
-								<option value="${item }" selected>${item}개</option>
+							<c:when test="${param.record_cnt == item}" >
+								<option value="${item}" selected>${item}개</option>
 							</c:when>
+							<c:otherwise>
+								<option value="${item}">${item}개</option>
+							</c:otherwise>
 						</c:choose>
-						<option value="${item}" >${item}개</option>
 					</c:forEach>
 				</select>
 			</form>
@@ -75,13 +83,17 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<c:forEach begin='1' end='${pagingCnt }' var="num">
-			<c:if test='${param.page == num }'> 
-				<span id='now_page'>${num }</span>
-			</c:if>
-			<c:if test='${param.page !=  num}'>
-				<a href='/board/list?page=${num}'>${num}</a>
-			</c:if>
+		<c:forEach begin='1' end='${pagingCnt }' var="item">
+			<c:choose>
+				<c:when test="${page == item}">
+					<span class="pagingFont pageSelected">${item}</span>
+				</c:when>
+				<c:otherwise>
+					<span class="pagingFont">
+						<a href="/board/list?page=${item}&record_cnt=${param.record_cnt}">${item}</a>
+					</span>
+				</c:otherwise>
+			</c:choose>
 		</c:forEach>
 	</div>
 	<script>
@@ -90,7 +102,7 @@
 		}
 	
 		function moveToDetail(i_board) {
-			location.href = "/board/detail?i_board=" + i_board;
+			location.href = '/board/detail?page=${page}&record_cnt=${param.record_cnt}&i_board=' + i_board
 		}
 	</script>
 </body>
