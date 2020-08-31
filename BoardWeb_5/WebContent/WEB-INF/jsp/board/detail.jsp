@@ -47,7 +47,7 @@
 <body>
 	<div class="container">
 		<div class="list">
-             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}">목록</a>
+             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}" id="list">목록</a>
         </div>
 		<c:if test="${loginUser.i_user == data.i_user }">
 			<div class="upd"><a href="/board/regmod?i_board=${data.i_board }" id="upd">수정</a></div>
@@ -106,28 +106,28 @@
 		</div>
 	</div>
 	<script>
-	function clkCmtDel(i_cmt) {
-		if(confirm('삭제 하시겠습니까?')) {
-			location.href = '/board/cmt?i_board=${data.i_board}&i_cmt=' + i_cmt
+		function clkCmtDel(i_cmt) {
+			if(confirm('삭제 하시겠습니까?')) {
+				location.href = '/board/cmt?i_board=${data.i_board}&i_cmt=' + i_cmt
+			}
 		}
-	}
-	
-	function clkCmtCancel() {
-		cmtFrm.i_cmt.value = 0
-		cmtFrm.cmt.value = ''  //홑따옴표
-		cmtSubmit.value = '작성완료'
-	}
-
-	//댓글 수정
-	function clkCmtMod(i_cmt, cmt) {
-		console.log('i_cmt : ' + i_cmt)
 		
-		cmtFrm.i_cmt.value = i_cmt
-		cmtFrm.cmt.value = cmt
-		
-		cmtSubmit.value = '수정'
-	}
+		function clkCmtCancel() {
+			cmtFrm.i_cmt.value = 0
+			cmtFrm.cmt.value = ''  //홑따옴표
+			cmtSubmit.value = '작성완료'
+		}
 	
+		//댓글 수정
+		function clkCmtMod(i_cmt, cmt) {
+			console.log('i_cmt : ' + i_cmt)
+			
+			cmtFrm.i_cmt.value = i_cmt
+			cmtFrm.cmt.value = cmt
+			
+			cmtSubmit.value = '수정'
+		}
+		
 		function submitDel() {
 			delFrm.submit()
 		}
@@ -135,8 +135,6 @@
 		function toggleLike(yn_like) {
 			location.href='/board/toggleLike?i_board=${data.i_board}&yn_like=' + yn_like
 		}									// 키값		벨류값
-		
-		
 	</script>
 </body>
 </html>
