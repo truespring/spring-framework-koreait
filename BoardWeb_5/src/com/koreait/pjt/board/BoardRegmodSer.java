@@ -42,16 +42,18 @@ public class BoardRegmodSer extends HttpServlet {
 		String strI_board = request.getParameter("i_board");
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
+		String filterCtnt1 = scriptFilter(ctnt);
+		String filterCtnt2 = swearWordFilter(filterCtnt1);
 		HttpSession hs = request.getSession();
 		UserVO uvo = (UserVO)hs.getAttribute(Const.LOGIN_USER);
 		int i_user = uvo.getI_user();
 		System.out.println("title : " + title);
-		System.out.println("ctnt : " + ctnt);
+		System.out.println("ctnt : " + filterCtnt2);
 		System.out.println("i_user : " + i_user);
 		
 		BoardVO param = new BoardVO();
 		param.setTitle(title);
-		param.setCtnt(ctnt);
+		param.setCtnt(filterCtnt2);
 		param.setI_user(i_user);
 		
 		if("".equals(strI_board)) { // 글등록 분기
@@ -70,5 +72,27 @@ public class BoardRegmodSer extends HttpServlet {
 //			return;
 		}
 	} // 로직 처리 ( DB에 등록 / 수정 ) 실시
-
+	
+//	욕필터
+	private String swearWordFilter(final String ctnt) {
+		String[] filters = {"개새끼", "미친년", "ㄱㅐㅅㅐㄲㅣ"};
+		String result = ctnt;
+		for(int i = 0; i < filters.length; i++) {
+			result = result.replace(filters[i], "***");
+		}
+		return result;
+	}
+	
+//	스크립트 필터 - 스크립트 무력화
+	private String scriptFilter(final String ctnt) {
+		String[] filters = {"<script>", "</script>"};
+		String[] filterResult = {"&lt;script&gt;", "&lt;/script&gt"};
+//		html에서 확인해 보면 <script></script>로 보이지만 문자열로 바뀐 것이기 때문에 실질적인 작동은 하지 않는다.
+		
+		String result = ctnt;
+		for(int i = 0; i < filters.length; i++) {
+			result = result.replace(filters[i], filterResult[i]);
+		}
+		return result;
+	}
 }
