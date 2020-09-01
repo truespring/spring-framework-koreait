@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>글목록</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <style>
 	.container {
 		width: 1200px; margin: 30px auto; text-align: center; padding: 5px;
@@ -86,6 +88,7 @@
 				<th>글제목</th>
 				<th>작성자</th>
 				<th>조회수</th>
+				<th>좋아요</th>
 				<th>작성 시간</th>
 			</tr>
 			<c:forEach items="${list}" var="item">
@@ -106,6 +109,7 @@
 						${item.nm}
 					</td>
 					<td>${item.hits }</td>
+					<td><span class="material-icons" style="color: red">favorite</span>(${item.like_cnt })</td>
 					<td>${item.r_dt }</td>
 				</tr>
 			</c:forEach>
