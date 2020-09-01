@@ -37,7 +37,7 @@ public class BoardDAO {
 		
 		String sql = " SELECT A.* FROM "
 				+ " (SELECT ROWNUM as RNUM, A.* FROM "
-				+ " (SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, C.cmt_cnt "
+				+ " (SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, C.cmt_cnt, B.profile_img "
 				+ " FROM t_board5 A INNER JOIN t_user B ON A.i_user = B.i_user "
 				+ " LEFT JOIN ( SELECT i_board, count(i_board) as cmt_cnt "
 				+ " FROM t_board5_cmt GROUP BY i_board)C ON A.i_board = C.i_board "
@@ -65,6 +65,7 @@ public class BoardDAO {
 					int i_user = rs.getInt("i_user");
 					String r_dt = rs.getNString("r_dt");
 					int cmt_cnt = rs.getInt("cmt_cnt");
+					String profile_img = rs.getNString("profile_img");
 					
 					BoardDomain vo = new BoardDomain();
 					vo.setI_board(i_board);
@@ -74,6 +75,7 @@ public class BoardDAO {
 					vo.setI_user(i_user);
 					vo.setR_dt(r_dt);
 					vo.setCmt_cnt(cmt_cnt);
+					vo.setProfile_img(profile_img);
 					
 					list.add(vo);
 				}
@@ -102,7 +104,6 @@ public class BoardDAO {
 	}
 	
 	public static void addHits(int i_board) {
-		BoardVO vo = new BoardVO();
 		String sql = " UPDATE t_board5 SET hits = hits + 1 "
 				+ " WHERE i_board = ? ";
 		
@@ -116,9 +117,9 @@ public class BoardDAO {
 		});
 	}
 	
-	public static BoardDomain selBoard(BoardVO param) {
+	public static BoardVO selBoard(BoardVO param) {
 		BoardDomain vo = new BoardDomain();
-		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board, DECODE(C.i_user, null, 0, 1) as yn_like, "
+		String sql = " SELECT A.title, A.i_user, A.ctnt, A.r_dt, A.hits, B.nm, A.i_board, DECODE(C.i_user, null, 0, 1) as yn_like, B.profile_img, "
 				+ " (SELECT count(*) FROM t_board5_like WHERE i_board = ?) as like_cnt "
 				+ " FROM t_board5 A "
 				+ " INNER JOIN t_user B "
@@ -149,6 +150,7 @@ public class BoardDAO {
 					int hits = rs.getInt("hits");
 					String nm = rs.getNString("nm");
 					int yn_like = rs.getInt("yn_like");
+					String profile_img = rs.getNString("profile_img");
 					
 					vo.setTitle(title);
 					vo.setI_board(i_board);
@@ -159,6 +161,7 @@ public class BoardDAO {
 					vo.setHits(hits);
 					vo.setNm(nm);
 					vo.setYn_like(yn_like);
+					vo.setProfile_img(profile_img);
 				}
 				return 1;
 			}

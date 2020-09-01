@@ -13,12 +13,15 @@
 		width: 800px; margin: 30px auto; background-color: #b0cac7;
 		padding: 20px;
 	}
+	.write{
+		position: realation;
+	}
 	#title {
 		margin: 20px; height: 40px;
 		line-height: 40px; font-size: 2em;
 	}
 	#nm {
-		margin: 20px;
+		margin: 20px; float:left; position: absolute; margin: 10px; margin-left: 40px;
 	}
 	#ctnt {
 		margin: 30px; padding: 10px; width: 600px;
@@ -42,35 +45,61 @@
 	.commentlist {
 		margin-top: 10px;
 	}
+	.containerPImg {
+		display: inline-block;	
+		width: 30px;
+		height: 30px;
+	    border-radius: 50%;
+	    overflow: hidden;
+	}
+	
+	.pImg {
+	
+		 object-fit: cover;
+		  max-width:100%;
+	}
 </style>
 </head>
 <body>
 	<div class="container">
-		<div class="list">
-             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}" id="list">목록</a>
-        </div>
-		<c:if test="${loginUser.i_user == data.i_user }">
-			<div class="upd"><a href="/board/regmod?i_board=${data.i_board }" id="upd">수정</a></div>
-			<form action="/board/del" id="delFrm" method="post">
-				<input type="hidden" name="i_board" value="${data.i_board }">
-				<div class="del"><a href="#" onclick="submitDel()" id="del">삭제</a></div>
-			</form>
-		</c:if>
-		<div id="title">${data.title }</div>
-		<div id="nm">${data.nm }</div>
-		<div id="ctnt">${data.ctnt }</div>
-		<div id="r_dt">작성일시 : ${data.r_dt }</div>
-		<div id="hits">조회수 : ${data.hits }</div>
-		<div id="yn_like">
-			<span onclick="toggleLike(${data.yn_like})" class="pointerCursor">
-				<c:if test="${data.yn_like == 1 }">
-					<span class="material-icons" style="color: red">favorite</span>
-				</c:if>
-				<c:if test="${data.yn_like == 0 }">
-					<span class="material-icons" style="color: red">favorite_border</span>
-				</c:if>
-			</span>
-			<span>${data.like_cnt }</span>
+		<div class="write">
+			<div class="list">
+	             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}" id="list">목록</a>
+	        </div>
+			<c:if test="${loginUser.i_user == data.i_user }">
+				<div class="upd"><a href="/board/regmod?i_board=${data.i_board }" id="upd">수정</a></div>
+				<form action="/board/del" id="delFrm" method="post">
+					<input type="hidden" name="i_board" value="${data.i_board }">
+					<div class="del"><a href="#" onclick="submitDel()" id="del">삭제</a></div>
+				</form>
+			</c:if>
+			<div id="title">${data.title }</div>
+			<div id="nm">${data.nm }
+			</div>
+			<div class="containerPImg writer_img">
+				<c:choose>
+					<c:when test="${data.profile_img != null}">
+						<img class="pImg" src="/img/user/${data.i_user}/${data.profile_img}">
+					</c:when>
+					<c:otherwise>
+						<img class="pImg" src="/img/default_profile.jpg">
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<div id="ctnt">${data.ctnt }</div>
+			<div id="r_dt">작성일시 : ${data.r_dt }</div>
+			<div id="hits">조회수 : ${data.hits }</div>
+			<div id="yn_like">
+				<span onclick="toggleLike(${data.yn_like})" class="pointerCursor">
+					<c:if test="${data.yn_like == 1 }">
+						<span class="material-icons" style="color: red">favorite</span>
+					</c:if>
+					<c:if test="${data.yn_like == 0 }">
+						<span class="material-icons" style="color: red">favorite_border</span>
+					</c:if>
+				</span>
+				<span>${data.like_cnt }</span>
+			</div>
 			<p id="comment"></p>
 		</div>
 		<div>
@@ -92,7 +121,19 @@
 					</tr>
 					<c:forEach items="${list }" var="item">
 						<tr>
-							<th>${item.nm }</th>
+							<td>
+								<div class="containerPImg">
+									<c:choose>
+										<c:when test="${item.profile_img != null}">
+											<img class="pImg" src="/img/user/${item.i_user}/${item.profile_img}">
+										</c:when>
+										<c:otherwise>
+											<img class="pImg" src="/img/default_profile.jpg">
+										</c:otherwise>
+									</c:choose>
+								</div>
+								${item.nm}
+							</td>
 							<th>${item.cmt }</th>
 							<th>${item.r_dt }</th>
 							<c:if test="${item.i_user == loginUser.i_user}">

@@ -14,7 +14,7 @@ public class BoardCmtDAO {
 	public static List<BoardCmtDomain> selCmtList(int i_board) {
 		final List<BoardCmtDomain> list = new ArrayList();
 		
-		String sql = " SELECT A.i_cmt, B.nm, A.cmt, A.r_dt, A.i_user "
+		String sql = " SELECT A.i_cmt, B.nm, A.cmt, A.r_dt, A.i_user, B.profile_img "
 				+ " FROM t_board5_cmt A "
 				+ " INNER JOIN t_user B "
 				+ " ON A.i_user = B.i_user "
@@ -36,6 +36,7 @@ public class BoardCmtDAO {
 					String r_dt = rs.getNString("r_dt");
 					int i_cmt = rs.getInt("i_cmt");
 					int i_user = rs.getInt("i_user"); // 수정과 삭제를 위해서 필요하다
+					String profile_img = rs.getNString("profile_img");
 					
 					BoardCmtDomain vo = new BoardCmtDomain();
 					vo.setI_cmt(i_cmt);
@@ -43,6 +44,7 @@ public class BoardCmtDAO {
 					vo.setCmt(cmt);
 					vo.setR_dt(r_dt);
 					vo.setI_user(i_user);
+					vo.setProfile_img(profile_img);
 					
 					list.add(vo);
 				}

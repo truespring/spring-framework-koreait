@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필</title>
-</head>
+</head>	
 <body>
 	<div>
 		<h1>프로필</h1>
