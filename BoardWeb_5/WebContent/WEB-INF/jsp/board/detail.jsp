@@ -186,27 +186,27 @@
         	var searchText = '${param.searchText}'
         	var searchType = '${param.searchType}'
         	
-        	switch(searchType) {
-        	case 'a': //제목
-        		var txt = title.innerText
-        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
-        		title.innerHTML = txt
-        		break
-        	case 'b': //내용
-        		var txt = ctnt.innerText
-        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
-        		ctnt.innerHTML = txt
-        		
-        		break
-        	case 'c': //제목+내용
-        		var txt = title.innerText
-        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
-        		title.innerHTML = txt
-        		
-        		txt = ctnt.innerText
-        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
-        		ctnt.innerHTML = txt
-        		break
+       		switch(searchType) {
+           	case 'a': //제목
+           		var txt = title.innerText
+           		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+           		title.innerHTML = txt
+           		break
+           	case 'b': //내용
+           		var txt = ctnt.innerText
+           		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+           		ctnt.innerHTML = txt
+           		
+           		break
+           	case 'c': //제목+내용
+           		var txt = title.innerText
+           		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+           		title.innerHTML = txt
+           		
+           		txt = ctnt.innerText
+           		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+           		ctnt.innerHTML = txt
+           		break
         	}
         }
         
