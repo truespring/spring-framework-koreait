@@ -58,6 +58,10 @@
 		 object-fit: cover;
 		  max-width:100%;
 	}
+	.highlight {
+		color: red;
+		font-weight: bold;
+	}
 </style>
 </head>
 <body>
@@ -178,6 +182,35 @@
 		function toggleLike(yn_like) {
     		location.href='/board/toggleLike?page=${param.page}&record_cnt=${param.record_cnt}&searchType=${param.searchType}&searchText=${param.searchText}&i_board=${data.i_board}&yn_like=' + yn_like
     	}									// 키값		벨류값
+    	function doHighlight() {
+        	var searchText = '${param.searchText}'
+        	var searchType = '${param.searchType}'
+        	
+        	switch(searchType) {
+        	case 'a': //제목
+        		var txt = title.innerText
+        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
+        		title.innerHTML = txt
+        		break
+        	case 'b': //내용
+        		var txt = ctnt.innerText
+        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
+        		ctnt.innerHTML = txt
+        		
+        		break
+        	case 'c': //제목+내용
+        		var txt = title.innerText
+        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
+        		title.innerHTML = txt
+        		
+        		txt = ctnt.innerText
+        		txt = txt.replace(/${param.searchText}/gi, '<span class="highlight">' + searchText + '</span>')
+        		ctnt.innerHTML = txt
+        		break
+        	}
+        }
+        
+        doHighlight()
 	</script>
 </body>
 </html>

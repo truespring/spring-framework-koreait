@@ -52,6 +52,10 @@
 		 object-fit: cover;
 		  max-width:100%;
 	}
+	.highlight {
+		color: red;
+		font-weight: bold;
+	}
 </style>
 </head>
 <body>

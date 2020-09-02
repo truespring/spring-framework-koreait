@@ -1,6 +1,7 @@
 package com.koreait.pjt.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -64,8 +65,19 @@ public class BoardListSer extends HttpServlet {
 		param.seteIdx(eIdx);
 		param.setsIdx(sIdx);
 		
+		List<BoardDomain> list = BoardDAO.selBoardList(param);
+		//하이라이트 처리
+		if(!"".equals(searchText) && ("a".equals(searchType) || "c".equals(searchType))) {
+			for(BoardDomain item : list) {
+				String title = item.getTitle();
+				title = title.replace(searchText
+						, "<span class=\"highlight\">" + searchText +"</span>");
+				item.setTitle(title);
+			}
+		}
+
+		request.setAttribute("list", list);
 		request.setAttribute("searchType", searchType);
-		request.setAttribute("list", BoardDAO.selBoardList(param));
 		request.setAttribute("pagingCnt", BoardDAO.selPagingCnt(param));
 		
 		ViewResolver.forwardLoginChk("board/list", request, response);

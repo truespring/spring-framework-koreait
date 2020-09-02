@@ -10,8 +10,8 @@ import com.koreait.pjt.board.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 
 public class BoardDAO {
-	public static List<BoardVO> selBoardList(BoardDomain param) {
-		final List<BoardVO> list = new ArrayList();
+	public static List<BoardDomain> selBoardList(BoardDomain param) {
+		final List<BoardDomain> list = new ArrayList();
 		// 주소값을 고정시키는 것이고 내부의 값들은 변경이 가능하다.
 		
 //		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
