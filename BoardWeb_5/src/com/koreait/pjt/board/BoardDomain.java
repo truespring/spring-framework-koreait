@@ -7,12 +7,21 @@ public class BoardDomain extends BoardVO {
 	private int cmt_cnt;
 	private String nm;
 	private int record_cnt; // 페이지 당 나온는 레코드 수
+	private int page;
+	private String profile_img;
+	private String searchText; // DB 컬럼에 없는 변수명들
 	private int sIdx;
 	private int eIdx;
-	private int page;
-	private String searchText;
-	private String profile_img;
+	private String searchType;
 	
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
 	public String getProfile_img() {
 		return profile_img;
 	}

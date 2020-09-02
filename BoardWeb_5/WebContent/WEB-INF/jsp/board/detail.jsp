@@ -64,7 +64,7 @@
 	<div class="container">
 		<div class="write">
 			<div class="list">
-	             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}" id="list">목록</a>
+	             <a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}&searchType=${param.searchType}" id="list">목록</a>
 	        </div>
 			<c:if test="${loginUser.i_user == data.i_user }">
 				<div class="upd"><a href="/board/regmod?i_board=${data.i_board }" id="upd">수정</a></div>
@@ -170,12 +170,14 @@
 		}
 		
 		function submitDel() {
-			delFrm.submit()
+			if(confirm('삭제 하시겠습니까?')){
+				delFrm.submit()
+			}
 		}
 		
 		function toggleLike(yn_like) {
-			location.href='/board/toggleLike?i_board=${data.i_board}&yn_like=' + yn_like
-		}									// 키값		벨류값
+    		location.href='/board/toggleLike?page=${param.page}&record_cnt=${param.record_cnt}&searchType=${param.searchType}&searchText=${param.searchText}&i_board=${data.i_board}&yn_like=' + yn_like
+    	}									// 키값		벨류값
 	</script>
 </body>
 </html>

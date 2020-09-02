@@ -109,13 +109,24 @@
 						${item.nm}
 					</td>
 					<td>${item.hits }</td>
-					<td><span class="material-icons" style="color: red">favorite</span>(${item.like_cnt })</td>
+					<td>
+					<c:if test="${item.yn_like == 1 }">
+						<span class="material-icons" style="color: red">favorite</span>
+					</c:if>
+					<c:if test="${item.yn_like == 0 }">
+						<span class="material-icons" style="color: red">favorite_border</span>
+					</c:if>(${item.like_cnt })</td>
 					<td>${item.r_dt }</td>
 				</tr>
 			</c:forEach>
 		</table>
 		<div>
 			<form action="/board/list" id="serFrm">
+				<select name="searchType">
+					<option value="a" ${searchType == 'a' ? 'selected' : '' }>제목</option>
+					<option value="b" ${searchType == 'b' ? 'selected' : '' }>내용</option>
+					<option value="c" ${searchType == 'c' ? 'selected' : '' }>제목+내용</option>
+				</select>
 				<input type="text" name="searchText" value="${param.searchText }">
 				<input type="submit" value="검색">
 			</form>
@@ -127,7 +138,7 @@
 				</c:when>
 				<c:otherwise>
 					<span class="pagingFont">
-						<a href="/board/list?page=${item}&record_cnt=${param.record_cnt}&searchText=${param.searchText}">${item}</a>
+						<a href="/board/list?page=${item}&record_cnt=${param.record_cnt}&searchText=${param.searchText}&searchType=${searchType}">${item}</a>
 					</span>
 				</c:otherwise>
 			</c:choose>
@@ -139,7 +150,7 @@
 		}
 	
 		function moveToDetail(i_board) {
-			location.href = '/board/detail?page=${page}&record_cnt=${param.record_cnt}&i_board=' + i_board + '&searchText=${param.searchText}'
+			location.href = '/board/detail?page=${page}&record_cnt=${param.record_cnt}&i_board=' + i_board + '&searchText=${param.searchText}&searchType=${searchType}'
 		}
 	</script>
 </body>
