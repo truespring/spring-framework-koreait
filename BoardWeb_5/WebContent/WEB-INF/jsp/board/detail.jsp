@@ -102,7 +102,7 @@
 						<span class="material-icons" style="color: red">favorite_border</span>
 					</c:if>
 				</span>
-				<span>${data.like_cnt }</span>
+				<span>${data.like_cnt == 0 ? "" : data.like_cnt}</span>
 			</div>
 			<p id="comment"></p>
 		</div>
@@ -110,6 +110,10 @@
 			<form id="cmtFrm" action="/board/cmt" method="post">
 				<input type="hidden" name="i_cmt" value="0">
 				<input type="hidden" name="i_board" value="${data.i_board }">
+				<input type="hidden" name="page" value="${param.page }">
+				<input type="hidden" name="record_cnt" value="${param.record_cnt }">
+				<input type="hidden" name="searchText" value="${param.searchText }">
+				<input type="hidden" name="searchType" value="${param.searchType }">
 				<div>
 					<input type="text" id="cmt" name="cmt" placeholder="댓글내용">
 					<input type="submit" id="cmtSubmit" value="작성완료">

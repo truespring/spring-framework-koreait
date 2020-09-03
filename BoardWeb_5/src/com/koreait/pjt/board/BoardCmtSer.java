@@ -44,7 +44,11 @@ public class BoardCmtSer extends HttpServlet {
 		String strI_board = request.getParameter("i_board");
 		String cmt = request.getParameter("cmt");
 		UserVO loginUser = MyUtils.getLoginUser(request);
-		
+		int page = MyUtils.getIntParameter(request, "page");
+		int record_cnt = MyUtils.getIntParameter(request, "record_cnt");
+		String searchText = request.getParameter("searchText");
+		String searchType = request.getParameter("searchType");
+		System.out.println("1 : " + page + " 2 : " + record_cnt + " 3 : " + searchText + " 4 : " + searchType);
 		int i_user = loginUser.getI_user();
 		int i_board = MyUtils.parseStrToInt(strI_board);
 		
@@ -66,7 +70,11 @@ public class BoardCmtSer extends HttpServlet {
 			System.out.println("댓글 수정 : " + result);
 			break;
 		}
-		response.sendRedirect("/board/detail?i_board=" + strI_board);
+		
+		String target = String.format("/board/detail?i_board=%s&page=%s&record_cnt=%s&searchType=%s&searchText=%s"
+				, strI_board, page, record_cnt, searchType, searchText);
+		
+		response.sendRedirect(target);
 	}
 
 }
