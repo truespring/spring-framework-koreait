@@ -106,7 +106,7 @@
 									<img class="pImg" src="/img/user/${item.i_user}/${item.profile_img}">
 								</c:when>
 								<c:otherwise>
-									<img class="pImg" src="/img/default_profile.jpg">
+									<img class="pImg" src="/img/default_profile.gif">
 								</c:otherwise>
 							</c:choose>
 						</div>

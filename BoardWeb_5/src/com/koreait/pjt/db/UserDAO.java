@@ -25,7 +25,7 @@ public class UserDAO {
 		});
 	}
 	
-	public static int login(UserVO param) {
+	public static int join(UserVO param) {
 		int result = 0;
 		
 		String sql = "INSERT INTO t_user "
@@ -45,7 +45,7 @@ public class UserDAO {
 		});
 	}
 	
-	public static int selUser(UserVO param) {
+	public static int login(UserVO param) {
 		int result = 0;
 		
 		String sql = " SELECT i_user, user_pw, nm "

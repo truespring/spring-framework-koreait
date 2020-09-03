@@ -17,10 +17,15 @@
 					<img src="/img/user/${loginUser.i_user}/${data.profile_img}">
 				</c:when>
 				<c:otherwise>
-					<img src="img/default_profile.jpg">
+					<img src="/img/default_profile.gif">
 				</c:otherwise>
 			</c:choose>
 		</div>
+		<div>
+			<a href="/changePw"><button>비밀번호 변경</button></a>
+			<a href="/board/list"><button>리스트로 돌아가기</button></a>
+		</div>
+		
 		<form action="/profile" method="post" enctype="multipart/form-data">
 		<!-- 인코딩타입이 필요하다 -->
 			<div>
@@ -33,5 +38,14 @@
 		<div>이메일 : ${data.email }</div>
 		<div>가입일자 : ${data.r_dt }</div>
 	</div>
+	<script>
+		var proc = '${param.proc}'
+		switch(proc) {
+		case '1':
+			alert('비밀번호를 변경하였습니다.')
+			break
+		}
+		
+	</script>
 </body>
 </html>

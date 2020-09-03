@@ -38,7 +38,7 @@ public class JoinSer extends HttpServlet {
 		param.setNm(nm);
 		param.setEmail(email);
 		
-		int result = UserDAO.login(param);
+		int result = UserDAO.join(param);
 		System.out.println("result : " + result);
 		if(result != 1) { // 실패했을 때
 			request.setAttribute("msg", "에러가 발생하였습니다.");
