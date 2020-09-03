@@ -39,6 +39,25 @@
 	.pointerCursor:hover {
 		 cursor: pointer;
 	}
+	.like {
+		display: inline-block;
+	}
+	#like {
+		position: relative;
+	}
+	#like:hover {
+	cursor: pointer;
+	}
+	#likeListContainer {
+		position: absolute; background-color: #bdc3c7; width: 200px; height: 200px;
+		overflow-y: auto; border: 1px solid gray; visibility:hidden;
+	}
+	#like:hover + #likeListContainer {
+		visibility:visible;
+	}
+	#likeListContainer:hover {
+		visibility:visible;
+	}
 	#cmt {
 		width: 400px; margin: 20px;
 	}
@@ -61,6 +80,12 @@
 	.highlight {
 		color: red;
 		font-weight: bold;
+	}
+	#likeListContainer ul {
+		list-style-type: none;
+	}
+	#likeListContainer ul li:first-child {
+		float:left;
 	}
 </style>
 </head>
@@ -86,7 +111,7 @@
 						<img class="pImg" src="/img/user/${data.i_user}/${data.profile_img}">
 					</c:when>
 					<c:otherwise>
-						<img class="pImg" src="/img/default_profile.jpg">
+						<img class="pImg" src="/img/default_profile.png">
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -102,7 +127,30 @@
 						<span class="material-icons" style="color: red">favorite_border</span>
 					</c:if>
 				</span>
-				<span>${data.like_cnt == 0 ? "" : data.like_cnt}</span>
+				<div class="like">
+					<span id="like">좋아요 : ${data.like_cnt == 0 ? "" : data.like_cnt}</span>
+					<div id="likeListContainer">
+						<c:forEach items="${likeList}" var="list">
+							<div>
+								<ul>
+									<li>
+										<div class="containerPImg">
+											<c:choose>
+												<c:when test="${list.profile_img != null}">
+													<img class="pImg" src="/img/user/${list.i_user}/${list.profile_img}">
+												</c:when>
+												<c:otherwise>
+													<img class="pImg" src="/img/default_profile.png">
+												</c:otherwise>
+											</c:choose>
+										</div>
+									</li>
+									<li>${list.nm}</li>
+								</ul>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
 			</div>
 			<p id="comment"></p>
 		</div>
@@ -136,7 +184,7 @@
 											<img class="pImg" src="/img/user/${item.i_user}/${item.profile_img}">
 										</c:when>
 										<c:otherwise>
-											<img class="pImg" src="/img/default_profile.jpg">
+											<img class="pImg" src="/img/default_profile.png">
 										</c:otherwise>
 									</c:choose>
 								</div>

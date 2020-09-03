@@ -48,7 +48,7 @@ public class BoardCmtSer extends HttpServlet {
 		int record_cnt = MyUtils.getIntParameter(request, "record_cnt");
 		String searchText = request.getParameter("searchText");
 		String searchType = request.getParameter("searchType");
-		System.out.println("1 : " + page + " 2 : " + record_cnt + " 3 : " + searchText + " 4 : " + searchType);
+		
 		int i_user = loginUser.getI_user();
 		int i_board = MyUtils.parseStrToInt(strI_board);
 		

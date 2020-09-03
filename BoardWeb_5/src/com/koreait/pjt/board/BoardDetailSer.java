@@ -47,6 +47,7 @@ public class BoardDetailSer extends HttpServlet {
 
 		BoardVO data = BoardDAO.selBoard(param);
 		request.setAttribute("data", data);
+		request.setAttribute("likeList", BoardDAO.selBoardLikeList(i_board));
 		
 		List<BoardCmtDomain> list = BoardCmtDAO.selCmtList(i_board);
 		request.setAttribute("list", list);
