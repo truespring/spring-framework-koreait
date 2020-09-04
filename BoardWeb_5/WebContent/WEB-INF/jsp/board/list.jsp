@@ -66,7 +66,6 @@
 		height: 300px;
 		overflow-y: auto;
 		background-color: white !important;
-		transition-duration : 500ms;
 		opacity: 0;
 	}		
 	
@@ -156,7 +155,7 @@
 					<c:if test="${item.yn_like == 0 }">
 						<span class="material-icons" style="color: red">favorite_border</span>
 					</c:if>
-					<span onclick="getlikeList(${item.i_board}, ${item.like_cnt })">(${item.like_cnt })</span></td>
+					<span onclick="getlikeList(${item.i_board}, ${item.like_cnt }, this)">(${item.like_cnt })</span></td>
 					<td>${item.r_dt }</td>
 				</tr>
 			</c:forEach>
@@ -189,10 +188,27 @@
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
-		function getlikeList(i_board, cnt) {
+		let beforeI_board = 0 // 전역변수 - 값이 유지된다
+		function getlikeList(i_board, cnt, span) {
+			if(cnt == 0 ) {return} // 좋아요가 0이면 return 한다
+			
+			if(beforeI_board == i_board) {
+				likeListContainer.style.display = 'none'
+				return
+			} else if(beforeI_board != i_board) {
+				beforeI_board = i_board
+				
+				likeListContainer.style.display = 'unset'
+			}
+			
+			const locationX = window.scrollX + span.getBoundingClientRect().left + 30
+			const locationY = window.scrollY + span.getBoundingClientRect().top + 30
+			
+			likeListContainer.style.left = `\${locationX}px`
+			likeListContainer.style.top = `\${locationY}px`
+
 			likeListContainer.style.opacity = 1
 			likeListContainer.innerHTML = ""
-			if(cnt == 0 ) {return}
 			
 			axios.get('/board/like', {
 				params: {
