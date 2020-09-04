@@ -56,6 +56,42 @@
 		color: red;
 		font-weight: bold;
 	}
+	#likeListContainer {			
+		padding: 10px;		
+		border: 1px solid #bdc3c7;
+		position: absolute;
+		left: 0px;
+		top: 30px;
+		width: 130px;
+		height: 300px;
+		overflow-y: auto;
+		background-color: white !important;
+		transition-duration : 500ms;
+		opacity: 0;
+	}		
+	
+	
+ 		
+	.profile {
+		background-color: white !important;
+		display: inline-block;	
+		width: 25px;
+		height: 25px;
+	    border-radius: 50%;
+	    overflow: hidden;
+	}		
+	
+	.likeItemContainer {
+		display: flex;
+		width: 100%;
+	}
+	
+	.likeItemContainer .nm {
+		background-color: white !important;
+		margin-left: 7px;
+		font-size: 0.7em;
+		display: flex;
+		align-items: center;
 </style>
 </head>
 <body>
@@ -96,9 +132,9 @@
 				<th>작성 시간</th>
 			</tr>
 			<c:forEach items="${list}" var="item">
-				<tr class="itemRow" onclick="moveToDetail(${item.i_board})">
-					<td>${item.i_board }</td>
-					<td>${item.title }[${item.cmt_cnt }]</td>
+				<tr class="itemRow">
+					<td onclick="moveToDetail(${item.i_board})">${item.i_board }</td>
+					<td onclick="moveToDetail(${item.i_board})">${item.title }[${item.cmt_cnt }]</td>
 					<td>
 						<div class="containerPImg">
 							<c:choose>
@@ -119,7 +155,8 @@
 					</c:if>
 					<c:if test="${item.yn_like == 0 }">
 						<span class="material-icons" style="color: red">favorite_border</span>
-					</c:if>(${item.like_cnt })</td>
+					</c:if>
+					<span onclick="getlikeList(${item.i_board}, ${item.like_cnt })">(${item.like_cnt })</span></td>
 					<td>${item.r_dt }</td>
 				</tr>
 			</c:forEach>
@@ -147,8 +184,49 @@
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
+		<div id="likeListContainer">
+		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
+		function getlikeList(i_board, cnt) {
+			likeListContainer.style.opacity = 1
+			likeListContainer.innerHTML = ""
+			if(cnt == 0 ) {return}
+			
+			axios.get('/board/like', {
+				params: {
+					i_board // 키값 : 벨류 - 쿼리스트링 대신 사용하는 법(두 값이 같다면 하나로 적어도 된다)
+				}
+			}).then(function(res) {
+				if(res.data.length > 0) {
+					//console.log(res)
+					for(let i = 0; i < res.data.length; i++) {
+						const result = makeLikeUser(res.data[i])
+						console.log(result)
+						likeListContainer.innerHTML += result
+					}
+				}
+			})
+		}
+		
+		function makeLikeUser(one) {
+			const img = one.profile_img == null ?
+					'<img class="pImg" src="/img/default_profile.png">'
+					:
+					`<img class="pImg" src="/img/user/\${one.i_user}/\${one.profile_img}">`
+			
+			const ele = `<div class="likeItemContainer">
+				<div class="profileContainer">
+					<div class="profile">
+						\${img}
+					</div>
+				</div>
+				<div class="nm">\${one.nm}</div>
+			</div>`
+			return ele
+		}
+	
 		function changeRecordCnt() {
 			selFrm.submit() 
 		}
