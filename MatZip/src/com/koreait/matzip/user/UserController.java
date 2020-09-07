@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.koreait.matzip.Const;
 import com.koreait.matzip.ViewRef;
+import com.koreait.matzip.vo.UserVO;
 
 public class UserController {
 	public String login(HttpServletRequest request) {
@@ -17,5 +18,13 @@ public class UserController {
 		request.setAttribute(Const.TITLE, "회원가입");
 		request.setAttribute(Const.VIEW, "user/join");
 		return ViewRef.TEMP_DEFAULT;
+	}
+	
+	public String joinProc(HttpServletRequest request) {
+		String user_id = request.getParameter("user_id");
+		String user_pw = request.getParameter("user_pw");
+		String nm = request.getParameter("nm");
+		
+		return "redirect:/user/login";
 	}
 }
