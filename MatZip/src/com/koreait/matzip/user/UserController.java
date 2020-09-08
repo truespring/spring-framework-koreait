@@ -7,6 +7,12 @@ import com.koreait.matzip.ViewRef;
 import com.koreait.matzip.vo.UserVO;
 
 public class UserController {
+	private UserService service;
+	
+	public UserController() {
+		service = new UserService();
+	}
+	
 	public String login(HttpServletRequest request) {
 //		request.setAttribute(Const.TEMPLATE, null); // 헤더, 사이드바, 풋터에 해당하는 항상 나오는 것들을 템플릿으로 정함
 		request.setAttribute(Const.TITLE, "로그인");
@@ -30,6 +36,18 @@ public class UserController {
 		param.setUser_pw(user_pw);
 		param.setNm(nm);
 		
+		int result = service.join(param); // 분기를 위해 result에 담아준다
 		return "redirect:/user/login";
+	}
+	
+	public String loginProc(HttpServletRequest request) {
+		String user_id = request.getParameter("user_id");
+		String user_pw = request.getParameter("user_pw");
+		
+		UserVO param = new UserVO();
+		param.setUser_id(user_id);
+		param.setUser_pw(user_pw);
+		
+		return "redirect:/restaurant/restMap";
 	}
 }

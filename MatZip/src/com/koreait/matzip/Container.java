@@ -29,14 +29,9 @@ public class Container extends HttpServlet {
 	private void proc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String temp = mapper.nav(request);
 		
-		if(temp.indexOf("/") >= 0) {
-			String isRedirect = temp.substring(0, temp.indexOf("/"));
-			System.out.println("isRedirect : " + isRedirect);
-			
-			if("redirect:".equals(isRedirect)) {
-				response.sendRedirect(temp.substring(temp.indexOf("/")));
-				return;
-			}
+		if(temp.indexOf("/") >= 0 && "redirect:".equals(temp.substring(0, temp.indexOf("/")))) {
+			response.sendRedirect(temp.substring(temp.indexOf("/")));
+			return;
 		}
 		
 		switch(temp) {
