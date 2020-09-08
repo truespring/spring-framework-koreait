@@ -18,21 +18,24 @@
 	
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
-		function chkId() {
-			const user_id = frm.user_id.value
-			var text;
-			axios.get('/user/ajaxIdChk', {
-				params: {
-					user_id
-				}
-			}).then(function(res) {
-				console.log(res)
-				if(res.data.result == 2) { // 아이디 사용 가능
-					text = document.querySelector('#idChkResult').innerText = '사용 가능한 아이디 입니다.'
-				} else if(res.data.result == 3) { // 아이디 중복 됨
-					text = document.querySelector('#idChkResult1').InnerText = '중복된 아이디 입니다.'
-				}
-			})
-		}
+	function chkId() {												
+		const user_id = frm.user_id.value									
+		var text;									
+		axios.get('/user/ajaxIdChk', {									
+			params: {								
+				user_id							
+			}								
+		}).then(function(res) {									
+			console.log(res)								
+			console.log(res.data.result)								
+			if(res.data.result == 2) { // 아이디 사용 가능								
+				text = document.querySelector('#idChkResult').innerText = '사용 가능한 아이디 입니다.'							
+			} else if(res.data.result == 3) { // 아이디 중복 됨								
+				text = document.querySelector('#idChkResult').innerText = '중복된 아이디 입니다.'							
+			}								
+		})									
+	}										
+	
+
 	</script>
 </div>
