@@ -25,6 +25,11 @@ public class UserController {
 		String user_pw = request.getParameter("user_pw");
 		String nm = request.getParameter("nm");
 		
+		UserVO param = new UserVO();
+		param.setUser_id(user_id);
+		param.setUser_pw(user_pw);
+		param.setNm(nm);
+		
 		return "redirect:/user/login";
 	}
 }
