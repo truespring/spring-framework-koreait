@@ -14,10 +14,39 @@ public class UserController {
 	}
 	
 	public String login(HttpServletRequest request) {
+		String error = request.getParameter("error");
+		
+		if(error != null) {
+			switch(error) {
+			case "2":
+				request.setAttribute("msg", "아이디를 확인해 주세요.");
+				break;
+			case "3":
+				request.setAttribute("msg", "비밀번호를 확인해 주세요.");
+				break;
+			}
+		}
 //		request.setAttribute(Const.TEMPLATE, null); // 헤더, 사이드바, 풋터에 해당하는 항상 나오는 것들을 템플릿으로 정함
 		request.setAttribute(Const.TITLE, "로그인");
 		request.setAttribute(Const.VIEW, "user/login"); // 로그인 때만 필요한 정보들
 		return ViewRef.TEMP_DEFAULT;
+	}
+	
+	public String loginProc(HttpServletRequest request) {
+		String user_id = request.getParameter("user_id");
+		String user_pw = request.getParameter("user_pw");
+		
+		UserVO param = new UserVO();
+		param.setUser_id(user_id);
+		param.setUser_pw(user_pw);
+		
+		int result = service.login(param);
+		
+		if(result == 1) {
+			return "redirect:/restaurant/restMap";
+		} else {
+			return "redirect:/user/login?login?user_id=" + user_id + "&error=" + result;
+		}
 	}
 	
 	public String join(HttpServletRequest request) {
@@ -40,14 +69,15 @@ public class UserController {
 		return "redirect:/user/login";
 	}
 	
-	public String loginProc(HttpServletRequest request) {
+	public String ajaxIdChk(HttpServletRequest request) {
 		String user_id = request.getParameter("user_id");
-		String user_pw = request.getParameter("user_pw");
-		
 		UserVO param = new UserVO();
 		param.setUser_id(user_id);
-		param.setUser_pw(user_pw);
+		param.setUser_pw(""); // null값이 넘어오면 에러가 발생하기 때문
 		
-		return "redirect:/restaurant/restMap";
+		int result = service.login(param);
+	
+		return String.format("ajax:{\"result\": %s}", result);
 	}
+	
 }
