@@ -19,6 +19,7 @@ a {
 .ml5 { margin-left: 5px;}
 .ml10 { margin-left: 10px;}
 .ml15 { margin-left: 15px;}
+.mr15{ margin-right: 15px;}
 
 #container {
 	display: flex;
@@ -47,7 +48,13 @@ a {
 #container > header > #headerRight {
 	display: flex;
 	flex-frow: 1;
+	padding-right: 20px;
 	align-items: center;
+	justify-content: flex-end;
+}
+
+#headerRight> a {
+	font-size: 1.4em;
 }
 
 #container > section {

@@ -28,6 +28,13 @@ public class Container extends HttpServlet {
 	}
 	
 	private void proc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		String routerCheckResult = LoginCheckInterceptor.routerChk(request);
+		if(routerCheckResult != null) {
+			response.sendRedirect(routerCheckResult);
+			return;
+		}
+		
 		String temp = mapper.nav(request);
 		
 		if(temp.indexOf(":") >= 0) {
