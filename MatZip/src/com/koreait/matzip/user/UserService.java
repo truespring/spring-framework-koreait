@@ -34,6 +34,11 @@ public class UserService {
 			String encryptPw = SecurityUtils.getEncrypt(param.getUser_pw(), salt);
 			
 			if(encryptPw.equals(dbResult.getUser_pw())) {
+				param.setUser_pw(null);
+				param.setI_user(dbResult.getI_user());
+				param.setNm(dbResult.getNm());
+				param.setProfile_img(dbResult.getProfile_img());
+				
 				result = 1; // 로그인 성공
 			} else {
 				result = 3; // 비밀번호 오류
