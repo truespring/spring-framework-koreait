@@ -26,7 +26,8 @@
 				<div class="ml15" id="headerLogout"><a href="/user/logout">로그아웃</a></div>
 			</div>
 			<div id="headerRight">
-			 	메뉴들
+			 	<a href="/restaurant/reg">등록</a>
+			 	<a class="ml15 mr15" href="/user/favorite">찜</a>
 			</div>
 		</header>
 		<section>

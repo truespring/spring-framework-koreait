@@ -4,7 +4,21 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import com.koreait.matzip.vo.UserVO;
+
 public class SecurityUtils {
+	
+	public static UserVO getLoginUser(HttpServletRequest request) {
+		HttpSession hs = request.getSession();
+		return (UserVO)hs.getAttribute(Const.LOGIN_USER);
+	}
+	
+	public static boolean isLogout(HttpServletRequest request) {
+		return getLoginUser(request) == null;
+	}
 	
 	public static String getEncrypt(String source, String salt) {
         return getEncrypt(source, salt.getBytes());
@@ -52,4 +66,5 @@ public class SecurityUtils {
 		
 		return sb.toString();
 	}
+	
 }

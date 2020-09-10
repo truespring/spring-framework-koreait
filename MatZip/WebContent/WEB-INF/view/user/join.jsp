@@ -15,7 +15,7 @@
 		</form>
 		<div><a href="/user/login">로그인</a></div>
 	</div>
-	
+	<!-- ajax통신을 사용하는 이유는 값을 보내고 받을때 새로고침을 하지 않고 통신하기 위해서 -->
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
 	function chkId() {												
@@ -23,18 +23,18 @@
 		var text;									
 		axios.get('/user/ajaxIdChk', {									
 			params: {								
-				user_id							
+				'user_id': user_id	
 			}								
 		}).then(function(res) {									
 			console.log(res)								
 			console.log(res.data.result)								
 			if(res.data.result == 2) { // 아이디 사용 가능								
-				text = document.querySelector('#idChkResult').innerText = '사용 가능한 아이디 입니다.'							
+				idChkResult.innerText = '사용 가능한 아이디 입니다.'							
 			} else if(res.data.result == 3) { // 아이디 중복 됨								
-				text = document.querySelector('#idChkResult').innerText = '중복된 아이디 입니다.'							
+				idChkResult.innerText = '중복된 아이디 입니다.'							
 			}								
 		})									
-	}										
+	}
 	
 
 	</script>
