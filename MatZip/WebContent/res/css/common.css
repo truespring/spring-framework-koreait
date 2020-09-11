@@ -54,7 +54,10 @@ a {
 
 #container > header > #headerRight > a {
 	font-weight: bold;
-	font-size: 1.4em;
+}
+
+#icon {
+	font-size: 2em;
 }
 
 #container > section {

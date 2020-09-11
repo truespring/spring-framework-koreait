@@ -1,13 +1,19 @@
 package com.koreait.matzip.restaurant;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.koreait.matzip.db.JdbcSelectInterface;
 import com.koreait.matzip.db.JdbcTemplate;
 import com.koreait.matzip.db.JdbcUpdateInterface;
+import com.koreait.matzip.vo.RestaurantDomain;
+import com.koreait.matzip.vo.RestaurantVO;
 
 public class RestaurantDAO {
-	public static int restReg(RestaurantVO param) {
+	public static int insRestaurant(RestaurantVO param) {
 		String sql = " INSERT INTO t_restaurant "
 				+ " (nm, addr, lat, lng, cd_category, i_user) "
 				+ " VALUES "
@@ -26,5 +32,30 @@ public class RestaurantDAO {
 			}
 		});
 	}
-
+	
+	public List<RestaurantDomain> selRestList() {
+		List<RestaurantDomain> list = new ArrayList();
+		
+		String sql = " SELECT i_rest, nm, lat, lng "
+				+ " FROM t_restaurant ";
+		
+		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+			
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {}
+			
+			@Override
+			public void executeQuery(ResultSet rs) throws SQLException {
+				while(rs.next()) {
+					RestaurantDomain vo = new RestaurantDomain();
+					vo.setI_rest(rs.getInt("i_rest"));
+					vo.setNm(rs.getNString("nm"));
+					vo.setLat(rs.getDouble("lat"));
+					vo.setLng(rs.getDouble("lng"));
+					list.add(vo);
+				}
+			}
+		});
+		return list;
+	}
 }
