@@ -5,10 +5,10 @@
 }
 
 html, body {
-	height: 100%;
-	margin: 0;
 	padding: 0;
+	margin: 0;
 	width: 100%;
+	height: 100%;
 }
 
 a {
@@ -16,19 +16,18 @@ a {
 	text-decoration: none;
 }
 
-.ml5 { margin-left: 5px;}
-.ml10 { margin-left: 10px;}
-.ml15 { margin-left: 15px;}
-.mr15{ margin-right: 15px;}
+.ml5 { margin-left: 5px; }
+.ml10 { margin-left: 10px; }
+.ml15 { margin-left: 15px; }
 
 #container {
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 	width: 100%;
+	height: 100%;
 }
 
-#container > header {
+#container > header {	
 	background-color: #a29bfe;
 	display: flex;
 	height: 70px;
@@ -36,8 +35,8 @@ a {
 }
 
 #container > header > #headerLeft {
-	display: flex;
 	flex-grow: 1;
+	display: flex;
 	align-items: center;
 }
 
@@ -46,49 +45,51 @@ a {
 }
 
 #container > header > #headerRight {
+	padding-right: 50px;
 	display: flex;
-	flex-frow: 1;
-	padding-right: 20px;
-	align-items: center;
 	justify-content: flex-end;
+	align-items: center;
+	flex-grow: 1;
 }
 
-#headerRight> a {
+#container > header > #headerRight > a {
+	font-weight: bold;
 	font-size: 1.4em;
 }
 
 #container > section {
-	flex-grow: 1; 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
 }
 
 #container > footer {
 	align-items: center;
 	background-color: #636e72;
 	color: white;
-	display: flex;
+	display:flex;
 	height: 50px;
 	justify-content: center;
 	padding: 10px;
 }
 
 #sectionContainerCenter {
-	align-items: center; <!--가로방향 -->
-	display: flex;
-	height: 100%;
-	justify-content: center;<!-- 정방향 -->
 	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .frm {
+	padding: 15px;
 	border: 1px solid #bdc3c7;
-	padding: 20px;
 }
 
-.msg {
-	color: red;
-	font-weight: bold;
-}
-.containerPImg {
+.msg { color: red; }
+
+ .containerPImg {
 	display: inline-block;	
 	width: 50px;
 	height: 50px;
@@ -98,5 +99,6 @@ a {
 
 .pImg {
 	object-fit: cover;
-	max-width:100%;
+	height: 100%;
+	width: 100%;
 }

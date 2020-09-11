@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id="sectionContainerCenter">Map
+<div id="sectionContainerCenter">
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd39d5d86e6a76d14302b439f50a0c81"></script>
 	<div id="mapContainer" style="width:100%;height:100%;"></div>
 	<script>
