@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="/res/css/common.css">
 <title>${title }</title>
@@ -26,8 +28,9 @@
 				<div class="ml15" id="headerLogout"><a href="/user/logout">로그아웃</a></div>
 			</div>
 			<div id="headerRight">
-			 	<a href="/restaurant/reg">등록</a>
-			 	<a class="ml15 mr15" href="/user/favorite">찜</a>
+				<a href="/restaurant/restMap"><span class="material-icons">map</span></a>
+			 	<a class="ml15" href="/restaurant/restReg"><span class="material-icons">add_circle_outline</span></a>
+			 	<a class="ml15 mr15" href="/user/restFavorite"><span class="material-icons">favorite</span></a>
 			</div>
 		</header>
 		<section>
