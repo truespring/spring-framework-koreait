@@ -55,7 +55,33 @@ public class RestaurantController {
 		return "redirect:/restaurant/restMap";
 	}
 	
+	public String restDetail(HttpServletRequest request) {
+		int i_rest = CommonUtils.getIntParameter("i_rest", request);
+		
+		RestaurantVO param = new RestaurantVO();
+		param.setI_rest(i_rest);
+		
+		request.setAttribute("data", service.getRest(param));
+		request.setAttribute(Const.TITLE, "디테일");
+		request.setAttribute(Const.VIEW, "restaurant/restDetail");
+		
+		return ViewRef.TEMP_MENU_TEMP;
+	}
+	
 	public String ajaxGetList(HttpServletRequest request) {
 		return "ajax:" + service.getRestList();
+	}
+	
+	public String addRecMenusProc(HttpServletRequest request) {
+		int i_rest = CommonUtils.getIntParameter("i_rest", request);
+		
+		String[] menu_nmArr = request.getParameterValues("menu_nm");
+		String[] menu_priceArr = request.getParameterValues("menu_price");
+		
+		for(int i = 0; i < menu_nmArr.length; i++) {
+			System.out.println(i + " : " + menu_nmArr[i] + ", " + menu_priceArr[i]);
+		}
+		
+		return "redirect:/restaurant/restDetail?i_rest" + i_rest;
 	}
 }
