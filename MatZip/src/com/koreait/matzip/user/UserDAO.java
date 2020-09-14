@@ -13,7 +13,9 @@ public class UserDAO {
 	public static int join(UserVO param) {
 		int result = 0;
 
-		String sql = " INSERT INTO t_user " + " (user_id, user_pw, nm, salt, profile_img) " + " VALUES "
+		String sql = " INSERT INTO t_user "
+				+ " (user_id, user_pw, nm, salt, profile_img) "
+				+ " VALUES "
 				+ " (?, ?, ?, ?, ?) ";
 
 		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
