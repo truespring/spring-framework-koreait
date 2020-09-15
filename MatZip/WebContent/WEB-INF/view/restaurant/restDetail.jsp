@@ -1,28 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div id="sectionContainerCenter">
 	<div>
-		<c:if test="${loginUser.i_user == data.i_user }">
-		<div>
-			<button onclick="isDel()">삭제</button>
-			<form id="recFrm" action="/restaurant/addRecMenus" enctype="multipart/form-data" method="post">
-				<div><button type="button" onclick="addRecMenu()">메뉴 추가</button></div>
-				<input type="hidden" name="i_rest" value="${data.i_rest}">
-				<div id="recItem">
-					<div>
-						메뉴 : <input type="text" name="menu_nm">
-						가격 : <input type="number" name="menu_pirce">
-						사진 : <input type="file" name="menu_pic">
-					</div>
-				</div>
-				<div><input type="submit" value="등록"></div>
-			</form>
-		</div>
-		</c:if>
-		<div>
-			가게 사진들
-		</div>
 		<div class="restaurant-detail">
 			<div id="detail-header">
 				<div class="restaurant_title_wrap">
@@ -41,18 +22,68 @@
 					<tbody>
 						<tr>
 							<th>주소</th>
-							<th>${data.addr }</th>
+							<td>${data.addr }</td>
 						</tr>
 						<tr>
 							<th>카테고리</th>
-							<th>${data.cd_category_nm }</th>
+							<td>${data.cd_category_nm }</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<c:if test="${loginUser.i_user == data.i_user }">
+		<div>
+			<button onclick="isDel()">삭제</button>
+			<form id="recFrm" action="/restaurant/addRecMenusProc" enctype="multipart/form-data" method="post">
+				<div><button type="button" onclick="addRecMenu()">메뉴 추가</button></div>
+				<input type="hidden" name="i_rest" value="${data.i_rest}">
+				<div id="recItem"></div>
+				<div><input type="submit" value="등록"></div>
+			</form>
+		</div>
+		</c:if>
+		<div class="recMenuContainer">
+			<c:forEach items="${recommendMenuList}" var="item">
+				<div class="recMenuItem" id="recMenuItem_${item.seq}">
+					<div class="pic">
+						<c:if test="${item.menu_pic != null and item.menu_pic != ''}">
+							<img src="/res/img/restaurant/${data.i_rest}/${item.menu_pic}">
+						</c:if>
+					</div>
+					<div class="info">
+						<div class="nm">${item.menu_nm}</div>
+						<div class="price"><fmt:formatNumber type="number" value="${item.menu_price}"/></div>
+					</div>
+					<c:if test="${loginUser.i_user == data.i_user}">
+						<div class="delIconContainer" onclick="delRecMenu(${data.i_rest}, ${item.seq})">
+							<span class="material-icons">clear</span>
+						</div>
+					</c:if>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
+		function delRecMenu(i_rest, seq) {
+			console.log(i_rest)
+			console.log(seq)
+			
+			axios.get('/restaurant/ajaxDelRecMenu', {
+				params: {
+					i_rest, seq
+				}
+			}).then(function(res) {
+				if(res.data == 1) {
+					console.log(res.data)
+					var ele = document.querySelector('#recMenuItem_' + seq)
+					ele.remove()
+				}
+			})
+		}
+	
+		var idx = 0;
 		function addRecMenu() {
 			var div = document.createElement('div')
 			
@@ -64,7 +95,7 @@
 			inputPrice.setAttribute('name', 'menu_price')
 			var inputpic = document.createElement('input')
 			inputpic.setAttribute("type", "file")
-			inputpic.setAttribute('name', 'menu_pic')
+			inputpic.setAttribute('name', 'menu_pic_' + idx++)
 			
 			div.append('메뉴 : ')
 			div.append(inputNm)
@@ -75,6 +106,7 @@
 			
 			recItem.append(div)
 		}
+		addRecMenu() // 함수를 만들자마자 호출
 	
 		function isDel() {
 			if(confirm('삭제 하시겠습니까?')) {
