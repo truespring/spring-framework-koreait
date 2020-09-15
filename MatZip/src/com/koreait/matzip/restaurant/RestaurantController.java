@@ -1,20 +1,14 @@
 package com.koreait.matzip.restaurant;
 
-import java.io.File;
-import java.util.Enumeration;
-import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.koreait.matzip.CommonDAO;
 import com.koreait.matzip.CommonUtils;
 import com.koreait.matzip.Const;
-import com.koreait.matzip.FileUtils;
 import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.ViewRef;
+import com.koreait.matzip.vo.RestaurantRecommendMenuVO;
 import com.koreait.matzip.vo.RestaurantVO;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class RestaurantController {
 	private RestaurantService service;
@@ -68,6 +62,9 @@ public class RestaurantController {
 		RestaurantVO param = new RestaurantVO();
 		param.setI_rest(i_rest);
 		
+		request.setAttribute("css", new String[]{"restaurant"});
+		
+		request.setAttribute("recommendMenuList", service.getRecommendMenuList(i_rest));
 		request.setAttribute("data", service.getRest(param));
 		request.setAttribute(Const.TITLE, "디테일");
 		request.setAttribute(Const.VIEW, "restaurant/restDetail");
@@ -83,5 +80,19 @@ public class RestaurantController {
 		int i_rest = service.addRecMenus(request);
 		
 		return "redirect:/restaurant/restDetail?i_rest=" + i_rest;
+	}
+	
+	public String ajaxDelRecMenu(HttpServletRequest request) {
+		int i_rest = CommonUtils.getIntParameter("i_rest", request);
+		int seq = CommonUtils.getIntParameter("seq", request);
+		
+		RestaurantRecommendMenuVO param = new RestaurantRecommendMenuVO();
+		param.setI_rest(i_rest);
+		param.setSeq(seq);
+		
+		int result = service.delRecMenu(param);
+		
+		return "ajax:" + result;
+		
 	}
 }

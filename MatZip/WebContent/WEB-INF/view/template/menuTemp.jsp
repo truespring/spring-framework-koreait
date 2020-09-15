@@ -8,6 +8,9 @@
       rel="stylesheet">
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="/res/css/common.css">
+<c:forEach items="${css}" var="item">
+	<link rel="stylesheet" type="text/css" href="/res/css/${item }.css">
+</c:forEach>
 <title>${title }</title>
 </head>
 <body>

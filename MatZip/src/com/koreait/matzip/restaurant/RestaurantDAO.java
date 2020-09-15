@@ -113,11 +113,11 @@ public class RestaurantDAO {
 			
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, param.getI_rset());
+				ps.setInt(1, param.getI_rest());
 				ps.setNString(2, param.getMenu_nm());
 				ps.setInt(3, param.getMenu_price());
 				ps.setNString(4, param.getMenu_pic());
-				ps.setInt(5, param.getI_rset());
+				ps.setInt(5, param.getI_rest());
 			}
 		});
 	}
@@ -150,5 +150,19 @@ public class RestaurantDAO {
 			}
 		});
 		return list;
+	}
+	
+	public int delRecMenu(RestaurantRecommendMenuVO param) {
+		String sql = " DELETE FROM t_restaurant_recommend_menu "
+				+ " WHERE i_rest = ? AND seq = ? ";
+		
+		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+			
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, param.getI_rest());
+				ps.setInt(2, param.getSeq());
+			}
+		});
 	}
 }
