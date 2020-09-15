@@ -1,13 +1,20 @@
 package com.koreait.matzip.restaurant;
 
+import java.io.File;
+import java.util.Enumeration;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.koreait.matzip.CommonDAO;
 import com.koreait.matzip.CommonUtils;
 import com.koreait.matzip.Const;
+import com.koreait.matzip.FileUtils;
 import com.koreait.matzip.SecurityUtils;
 import com.koreait.matzip.ViewRef;
 import com.koreait.matzip.vo.RestaurantVO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class RestaurantController {
 	private RestaurantService service;
@@ -73,15 +80,8 @@ public class RestaurantController {
 	}
 	
 	public String addRecMenusProc(HttpServletRequest request) {
-		int i_rest = CommonUtils.getIntParameter("i_rest", request);
+		int i_rest = service.addRecMenus(request);
 		
-		String[] menu_nmArr = request.getParameterValues("menu_nm");
-		String[] menu_priceArr = request.getParameterValues("menu_price");
-		
-		for(int i = 0; i < menu_nmArr.length; i++) {
-			System.out.println(i + " : " + menu_nmArr[i] + ", " + menu_priceArr[i]);
-		}
-		
-		return "redirect:/restaurant/restDetail?i_rest" + i_rest;
+		return "redirect:/restaurant/restDetail?i_rest=" + i_rest;
 	}
 }

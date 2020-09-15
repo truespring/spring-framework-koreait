@@ -6,16 +6,10 @@
 		<c:if test="${loginUser.i_user == data.i_user }">
 		<div>
 			<button onclick="isDel()">삭제</button>
-			<form id="recFrm" action="/restaurant/addRecMenus" enctype="multipart/form-data" method="post">
+			<form id="recFrm" action="/restaurant/addRecMenusProc" enctype="multipart/form-data" method="post">
 				<div><button type="button" onclick="addRecMenu()">메뉴 추가</button></div>
 				<input type="hidden" name="i_rest" value="${data.i_rest}">
-				<div id="recItem">
-					<div>
-						메뉴 : <input type="text" name="menu_nm">
-						가격 : <input type="number" name="menu_pirce">
-						사진 : <input type="file" name="menu_pic">
-					</div>
-				</div>
+				<div id="recItem"></div>
 				<div><input type="submit" value="등록"></div>
 			</form>
 		</div>
@@ -53,6 +47,7 @@
 		</div>
 	</div>
 	<script>
+		var idx = 0;
 		function addRecMenu() {
 			var div = document.createElement('div')
 			
@@ -64,7 +59,7 @@
 			inputPrice.setAttribute('name', 'menu_price')
 			var inputpic = document.createElement('input')
 			inputpic.setAttribute("type", "file")
-			inputpic.setAttribute('name', 'menu_pic')
+			inputpic.setAttribute('name', 'menu_pic_' + idx++)
 			
 			div.append('메뉴 : ')
 			div.append(inputNm)
@@ -75,6 +70,7 @@
 			
 			recItem.append(div)
 		}
+		addRecMenu() // 함수를 만들자마자 호출
 	
 		function isDel() {
 			if(confirm('삭제 하시겠습니까?')) {
