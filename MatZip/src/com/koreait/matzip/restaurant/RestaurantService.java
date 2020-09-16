@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 import com.koreait.matzip.CommonUtils;
@@ -38,6 +39,37 @@ public class RestaurantService {
 		return dao.selRest(param);
 	}
 	
+	//메뉴
+	public int addMenus(HttpServletRequest request) {
+		int i_rest = CommonUtils.getIntParameter("i_rest", request);
+		System.out.println("i_rest : " + i_rest);
+		String savePath = request.getServletContext().getRealPath("/res/img/restaurant/" + i_rest + "/menu"); // 절대 경로 뒤에 붙여줄 경로
+		System.out.println("savePath : "+ savePath);
+		
+		RestaurantRecommendMenuVO param = new RestaurantRecommendMenuVO();
+		param.setI_rest(i_rest);
+		
+		try {
+			for(Part part : request.getParts()) {
+				String fileName = part.getSubmittedFileName();
+				System.out.println("fileName : " + fileName);
+				
+				if(fileName != null) {
+					String ext = FileUtils.getExt(fileName);
+					String saveFileNm = UUID.randomUUID() + ext;
+					part.write(savePath + "/" + saveFileNm);
+					
+					param.setMenu_pic(saveFileNm);
+					dao.insRestMenu(param);
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return i_rest;
+	}
+	
+	// 추천 메뉴
 	public int addRecMenus(HttpServletRequest request) {
 		String savePath = request.getServletContext().getRealPath("/res/img/restaurant"); // 절대 경로 뒤에 붙여줄 경로
 		String tempPath = savePath + "/temp"; // 임시
@@ -114,7 +146,11 @@ public class RestaurantService {
 		return dao.selRecommendMenuList(i_rest);
 	}
 	
-	public int delRecMenu(RestaurantRecommendMenuVO param) {
-		return dao.delRecMenu(param);
+	public int delRecommendMenu(RestaurantRecommendMenuVO param) {
+		return dao.delRecommendMenu(param);
+	}
+	
+	public List<RestaurantRecommendMenuVO> getMenuList(int i_rest) {
+		return dao.selMenuList(i_rest);
 	}
 }
