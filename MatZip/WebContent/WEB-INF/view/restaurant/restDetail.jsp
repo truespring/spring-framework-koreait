@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div id="sectionContainerCenter">
 	<div>
 		<div class="restaurant-detail">
@@ -28,20 +29,50 @@
 							<th>카테고리</th>
 							<td>${data.cd_category_nm }</td>
 						</tr>
+						<tr>
+							<th>메뉴</th>
+							<td>	
+								<div class="menuList">
+									<c:if test="${fn:length(menuList) > 0}">
+										<c:forEach var="i" begin="0" end="${fn:length(menuList) > 3 ? 2 : fn:length(menuList) - 1}">
+											<div class="menuItem">
+												<img src="/res/img/restaurant/${data.i_rest}/menu/${menuList[i].menu_pic}">
+											</div>
+										</c:forEach>
+										<c:if test="${fn:length(menuList) > 3}">
+											<div class="menuItem bg_black">
+												<div class="moreCnt">
+													+${fn:length(menuList) - 3}
+												</div>
+											</div>
+										</c:if>
+									</c:if>
+								</div>
+							</td>	
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 		<c:if test="${loginUser.i_user == data.i_user }">
-		<div>
-			<button onclick="isDel()">삭제</button>
-			<form id="recFrm" action="/restaurant/addRecMenusProc" enctype="multipart/form-data" method="post">
-				<div><button type="button" onclick="addRecMenu()">메뉴 추가</button></div>
-				<input type="hidden" name="i_rest" value="${data.i_rest}">
-				<div id="recItem"></div>
-				<div><input type="submit" value="등록"></div>
-			</form>
-		</div>
+			<h2>--추천 메뉴--</h2>
+			<div>
+				<button onclick="isDel()">삭제</button>
+				<form id="recFrm" action="/restaurant/addRecMenusProc" enctype="multipart/form-data" method="post">
+					<div><button type="button" onclick="addRecMenu()">메뉴 추가</button></div>
+					<input type="hidden" name="i_rest" value="${data.i_rest}">
+					<div id="recItem"></div>
+					<div><input type="submit" value="등록"></div>
+				</form>
+			</div>
+			<h2>--메뉴--</h2>
+			<div>
+				<form id="menuFrm" action="/restaurant/addMenusProc" enctype="multipart/form-data" method="post">
+					<input type="hidden" name="i_rest" value="${data.i_rest}">
+					<input type="file" name="menu_pic" multiple>
+					<div><input type='submit' value="등록"></div>
+				</form>
+			</div>
 		</c:if>
 		<div class="recMenuContainer">
 			<c:forEach items="${recommendMenuList}" var="item">
@@ -53,7 +84,7 @@
 					</div>
 					<div class="info">
 						<div class="nm">${item.menu_nm}</div>
-						<div class="price"><fmt:formatNumber type="number" value="${item.menu_price}"/></div>
+						<div class="price"><fmt:formatNumber type="number" value="${item.menu_price}"/>원</div>
 					</div>
 					<c:if test="${loginUser.i_user == data.i_user}">
 						<div class="delIconContainer" onclick="delRecMenu(${data.i_rest}, ${item.seq})">
@@ -69,7 +100,9 @@
 		function delRecMenu(i_rest, seq) {
 			console.log(i_rest)
 			console.log(seq)
-			
+			if(!confirm('삭제하시겠습니까?')) {
+				return
+			}
 			axios.get('/restaurant/ajaxDelRecMenu', {
 				params: {
 					i_rest, seq
